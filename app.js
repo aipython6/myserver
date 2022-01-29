@@ -12,6 +12,7 @@ const corsConfig = require('./utils/corsConfig')
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth/auth')
 const userRouter = require('./routes/user/user')
+const menusRouter = require('./routes/menus/menus')
 const app = express();
 
 // view engine setup
@@ -26,26 +27,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   const url = req.url
+  console.log(url)
   // 不需要token验证的请求
   const whiteList = ['/auth/login', '/auth/code']
   if (whiteList.includes(url)) {
     return next()
-  }
-  // 获取请求头的token
-  const t = req.headers.Authorization
-  const { username } = req.body
-  if (!(token(t, username))) {
-    res.json({ code: statusCode.NotToken, msg: 'token验证失败' })
   } else {
-    return next()
+    // 获取请求头的token
+    const t = req.headers.authorization
+    // req.query为GET或DELETE请求，否则为POST或PUT请求
+    const { username } = url.indexOf('?') !== -1 ? req.query : req.body
+    if (!(await token.verify(t, username))) {
+      res.json({ code: statusCode.tokenVerifyError, msg: 'token验证失败' })
+    } else {
+      return next()
+    }
   }
 })
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter)
 app.use('/user/user', userRouter)
+app.use('/api/menus', menusRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

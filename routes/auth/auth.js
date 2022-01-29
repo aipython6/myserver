@@ -64,16 +64,40 @@ router.post('/login', async (req, res, next) => {
 	})
 })
 
-// 获取用户信息:用户角色、用户菜单、用户所有信息
+// 获取用户信息
 router.get('/info', async (req, res, next) => {
 	const { username } = req.query
-	console.log(req.query)
-	const user_sql = `SELECT * FROM user WHERE username='${username}'`
-	mysqlConnect.query(user_sql, (err, results) => {
+	// 根据username查询用户（信息，角色等）
+	const user_sql = ` select c.user_id,c.username,c.dept_name,c.avatar_path,c.gender,c.phone,c.is_admin,c.enabled,c.create_by,c.create_time,d.name,d.level,d.data_scope,d.description,d.type 
+	from ( select a.role_id,b.* from users_roles a left join users b on a.user_id = b.user_id where b.username = '${ username }') c left join roles d on c.role_id = d.role_id `
+	mysqlConnect.query(user_sql, function(err, result) {
 		if (err) {
-			console.log(err)
+			console.error(err)
 		} else {
-			res.json({ user: results[0], code: statusCode.success, msg: '获取用户信息成功' })
+			// 用户角色,可能有多个
+			const roles = result.map(e => {
+				return {
+					roles: e.type,
+					name: e.name,
+					level: e.level,
+					data_scope: e.data_scope,
+					descrption: e.descrption
+				}
+			})
+			// 用户基本信息
+			const basic_info = {
+				user_id: result[0].user_id,
+				username: result[0].username,
+				dept_name: result[0].dept_name,
+				avatar_path: result[0].avatar_path,
+				gender: result[0].gender,
+				phone: result[0].phone,
+				is_admin: result[0].is_admin,
+				enabled: result[0].enabled,
+				create_by: result[0].create_by,
+				create_time: result[0].time
+			}
+			res.json({ code: statusCode.success, user: basic_info, roles: roles ,msg: '获取用户信息成功' })
 		}
 	})
 })

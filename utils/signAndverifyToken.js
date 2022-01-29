@@ -5,13 +5,20 @@ class Token {
 	sign(username) {
 		return jwt.sign({ username: username }, my_token)
 	}
-	// 校验token
+	// 根据用户传入的username校验token
 	verify(token, username) {
-		const result = jwt.verify(token, my_token)
-		if (result) {
-			return username === result.username
+		if (token === undefined || token === '') {
+			return false
 		} else {
-			return 'token验证失败'
+			return new Promise((resolve, reject) => {
+				jwt.verify(token, my_token, function (err, result) {
+					if (err) {
+						reject(err)
+					} else {
+						resolve(result.username.toString() === username.toString())
+					}
+				})
+			})
 		}
 	}
 }

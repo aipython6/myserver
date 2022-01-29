@@ -15,7 +15,7 @@ class Cors {
 const cors_instance = new Cors({
   origin: 'http://localhost:8013',
   optionsSuccessStatus: 200,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'authorization']
 });
 
 module.exports = cors_instance

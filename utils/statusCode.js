@@ -12,7 +12,7 @@ const statusCode = {
 	verifyCodeError: 203,
 	
 	// 请求的URL未携带token
-	NotToken: 204
+	tokenVerifyError: 204
 }
 
 module.exports = statusCode
