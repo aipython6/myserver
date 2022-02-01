@@ -24,8 +24,9 @@ class Password {
 	passDecode(hash, pass) {
 			return new Promise((resolve, reject) => {
 				bcrypt.compare(pass, hash, (err, result) => {
-					if (!err) return resolve(hash)
-					else reject(err)
+          if (!err) {
+            return resolve(result)
+          } else reject(err)
 				})
 			})
 	}

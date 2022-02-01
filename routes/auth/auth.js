@@ -8,6 +8,7 @@ const statusCode = require('../../utils/statusCode')
 const token = require('../../utils/signAndverifyToken')
 // 获取验证码
 router.get('/code', async (req, res, next) => {
+  // 验证码的基本配置
 	const captcha = svgCaptcha.create({
 			size: 4,
 			ignoreChars: '0Oo1liI',
@@ -23,7 +24,7 @@ router.get('/code', async (req, res, next) => {
 	sql = `INSERT INTO uuid SET ?`
 	mysqlConnect.query(sql, insert_item, (err, results) => {
 		if (err) {
-			console.log(err)
+			console.error(err)
 		} else {
 			res.json({ img: captcha.data, uuid: uuid, msg: 'success' })
 		}
@@ -32,7 +33,8 @@ router.get('/code', async (req, res, next) => {
 
 // 用户登录
 router.post('/login', async (req, res, next) => {
-	const { username, password, uuid, code } = req.body
+  const { username, password, uuid, code } = req.body
+  console.log(req.body)
 	const query_user = `SELECT * FROM users WHERE username = '${username}'`
 	// 查询uuid
 	const query_uuid = `SELECT uuid, code FROM uuid WHERE uuid = '${uuid}'`
@@ -45,17 +47,17 @@ router.post('/login', async (req, res, next) => {
 			} else {
 				mysqlConnect.query(query_user, async (err, results) => {
 					if (err) {
-						console.log(err)
+						console.error(err)
 					} else {
 						// 该用户存在
-						if (results) {
+						if (results.length === 1) {
 							if (await comparePassword.passDecode(results[0].password, password)) {
-								res.json({ code: statusCode.success, token: token.sign(username), msg: '登录成功...' })
+								res.json({ code: statusCode.success, token: token.sign(username), msg: '登录成功' })
 							} else {
-								res.json({ code: statusCode.passError, msg: '密码错误' })
+								res.json({ code: statusCode.passError, msg: '密码错误,请重新输入' })
 							}
 						} else {
-							res.json({ code: statusCode.userNotExist, msg: '登陆失败,用户不存在' })
+							res.json({ code: statusCode.userNotExist, msg: '登陆失败,该用户不存在' })
 						}
 					}
 				})

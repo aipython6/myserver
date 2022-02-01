@@ -29,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(async (req, res, next) => {
   const url = req.url
-  console.log(url)
   // 不需要token验证的请求
   const whiteList = ['/auth/login', '/auth/code']
   if (whiteList.includes(url)) {
@@ -49,7 +48,7 @@ app.use(async (req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter)
-app.use('/user/user', userRouter)
+app.use('/api/users', userRouter)
 app.use('/api/menus', menusRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

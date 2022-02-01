@@ -1,7 +1,7 @@
 // 所有请求的状态码
 
 const statusCode = {
-  // 所有请求成功后统一返回的状态码
+  // 所有请求返回的状态码和提示信息
 	success: 200,
 	// 1. 用户登录
 	// 1.1 用户不存在
@@ -12,7 +12,13 @@ const statusCode = {
 	verifyCodeError: 203,
 	
 	// 请求的URL未携带token
-	tokenVerifyError: 204
+  tokenVerifyError: 204,
+  
+  // 添加用户失败
+  addUserError: 205,
+
+  // 用户删除失败
+  delUserError: 206
 }
 
 module.exports = statusCode
