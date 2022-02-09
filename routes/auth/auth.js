@@ -34,7 +34,6 @@ router.get('/code', async (req, res, next) => {
 // 用户登录
 router.post('/login', async (req, res, next) => {
   const { username, password, uuid, code } = req.body
-  console.log(req.body)
 	const query_user = `SELECT * FROM users WHERE username = '${username}'`
 	// 查询uuid
 	const query_uuid = `SELECT uuid, code FROM uuid WHERE uuid = '${uuid}'`
@@ -102,6 +101,11 @@ router.get('/info', async (req, res, next) => {
 			res.json({ code: statusCode.success, user: basic_info, roles: roles ,msg: '获取用户信息成功' })
 		}
 	})
+})
+
+// 退出
+router.delete('/logout', async (req, res, next) => {
+  res.json({ code: statusCode.success, msg: '已退出' })
 })
 
 module.exports = router
