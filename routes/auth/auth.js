@@ -6,6 +6,8 @@ const { v4: uuidv4 } = require('uuid')
 const comparePassword = require('../../utils/passBcrypt')
 const statusCode = require('../../utils/statusCode')
 const token = require('../../utils/signAndverifyToken')
+const permissionService = require('../../system/service/permissionService')
+const roleService = require('../../system/service/roleService')
 // 获取验证码
 router.get('/code', async (req, res, next) => {
   // 验证码的基本配置
@@ -106,6 +108,34 @@ router.get('/info', async (req, res, next) => {
 // 退出
 router.delete('/logout', async (req, res, next) => {
   res.json({ code: statusCode.success, msg: '已退出' })
+})
+
+
+// 获取user_id对应的角色和所有的permission
+router.get('/getPermission', async (req, res, next) => {
+  const { user_id, type } = req.query
+  const roleservice = new roleService(user_id)
+  // roles:角色id， types:角色名称
+  const { roles, types } = await roleservice.findRoleByUserId()
+  const permissionservice = new permissionService(roles, type)
+  const temp = await permissionservice.findPermissionByUserid()
+  const roles_ = new Set(types)  // 去除重复的role
+  const permissions = [...new Set(temp.map(e => e.permission))]  // 去除重复的CURD操作名称
+  // list
+  const list = permissions.filter(e => e === type+':list')
+  // add
+  const add = permissions.filter(e => e === type+':add')
+  // edit
+  const edit = permissions.filter(e => e === type+':edit')
+  // del
+  const del = permissions.filter(e => e === type+':del')
+  const result = {
+    list: [...roles_, ...list],
+    add: [...roles_, ...add],
+    edit: [...roles_, ...edit],
+    del: [...roles_, ...del]
+  }
+  res.json({ code: statusCode.success, permissions: result })
 })
 
 module.exports = router

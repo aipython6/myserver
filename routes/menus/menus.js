@@ -8,11 +8,12 @@ const handleRouter = require('../../utils/handleRouter')
 router.get('/build', async (req, res, next) => {
 	const { user_id } = req.query
   const roleservice = new roleService(user_id)
+  const obj = await roleservice.findRoleByUserId()
   // type!=2查询所有菜单，表示排除权限
-  const menuservice = new menuService(await roleservice.findRoleByUserId(), 2)
+  const menuservice = new menuService(obj.roles, 2)
   const menus = await menuservice.findMenusByRoldId()
-  console.log(menus)
   res.json({ code: statusCode.success, menus: handleRouter(menus) })
+  // res.json({ code: statusCode.success })
 })
 
 module.exports = router
