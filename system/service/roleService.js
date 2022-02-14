@@ -8,6 +8,19 @@ class roleService {
   findRoleByUserId() {
     return this.roleImpl.findRoleByUserId(this.user_id)
   }
+  // 获取所有的role
+  all() {
+    return this.roleImpl.all()
+  }
+  // 获取所有的level
+  level() {
+    return this.roleImpl.level()
+  }
+
+  // 根据id获取对应的role
+  get(id) {
+    return this.roleImpl.level()
+  }
 }
 
 module.exports = roleService

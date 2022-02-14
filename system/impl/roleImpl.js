@@ -19,6 +19,48 @@ class roleImpl {
       })
     })
   }
+
+  // 获取所有的role
+  all() {
+    const sql = `select * from roles`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 获取所有的level
+  level() {
+    const sql = `select level from roles`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result){
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 根据id获取对应的role
+  get(id) {
+    const sql = `select * from roles where role_id = ${id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result){
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
 }
 
 module.exports = roleImpl

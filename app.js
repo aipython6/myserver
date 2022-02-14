@@ -13,6 +13,8 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth/auth')
 const userRouter = require('./routes/user/user')
 const menusRouter = require('./routes/menus/menus')
+const deptRouter = require('./routes/dept/dept')
+const roleRouter = require('./routes/role/role')
 const app = express();
 
 // view engine setup
@@ -37,7 +39,8 @@ app.use(async (req, res, next) => {
     // 获取请求头的token
     const t = req.headers.authorization
     // req.query为GET或DELETE请求，否则为POST或PUT请求
-    const { username } = url.indexOf('?') !== -1 ? req.query : req.body
+    // const { username } = url.indexOf('?') !== -1 ? req.query : req.body
+    const username = req.headers.username
     if (!(await token.verify(t, username))) {
       res.json({ code: statusCode.tokenVerifyError, msg: 'token验证失败' })
     } else {
@@ -50,6 +53,8 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter)
 app.use('/api/users', userRouter)
 app.use('/api/menus', menusRouter)
+app.use('/api/dept', deptRouter)
+app.use('/api/role', roleRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

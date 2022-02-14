@@ -6,7 +6,8 @@ const roleService = require('../../system/service/roleService')
 const handleRouter = require('../../utils/handleRouter')
 // 获取某个角色下的所有菜单
 router.get('/build', async (req, res, next) => {
-	const { user_id } = req.query
+	// const { user_id } = req.query
+  const user_id = req.headers.userid
   const roleservice = new roleService(user_id)
   const obj = await roleservice.findRoleByUserId()
   // type!=2查询所有菜单，表示排除权限

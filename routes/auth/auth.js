@@ -6,8 +6,9 @@ const { v4: uuidv4 } = require('uuid')
 const comparePassword = require('../../utils/passBcrypt')
 const statusCode = require('../../utils/statusCode')
 const token = require('../../utils/signAndverifyToken')
-const permissionService = require('../../system/service/permissionService')
+const authService = require('../../system/service/authService')
 const roleService = require('../../system/service/roleService')
+
 // 获取验证码
 router.get('/code', async (req, res, next) => {
   // 验证码的基本配置
@@ -113,12 +114,13 @@ router.delete('/logout', async (req, res, next) => {
 
 // 获取user_id对应的角色和所有的permission
 router.get('/getPermission', async (req, res, next) => {
-  const { user_id, type } = req.query
+  const { type } = req.query
+  const user_id = req.headers.userid
   const roleservice = new roleService(user_id)
   // roles:角色id， types:角色名称
   const { roles, types } = await roleservice.findRoleByUserId()
-  const permissionservice = new permissionService(roles, type)
-  const temp = await permissionservice.findPermissionByUserid()
+  const authservice = new authService()
+  const temp = await authservice.findPermissionByRolesid(roles, type)
   const roles_ = new Set(types)  // 去除重复的role
   const permissions = [...new Set(temp.map(e => e.permission))]  // 去除重复的CURD操作名称
   // list
@@ -136,6 +138,23 @@ router.get('/getPermission', async (req, res, next) => {
     del: [...roles_, ...del]
   }
   res.json({ code: statusCode.success, permissions: result })
+})
+
+// 根据user_id查询[dept_id,...],用于给不同部门的用户指定数据显示的权限
+router.get('/getDeptids', async (req, res, next) => {
+  // dataPermission:表示数据范围(all:全部,非all:指定部门下的数据)
+  const { dataPermission } = req.query
+  const user_id = req.headers.userid
+  const roleservice = new roleService(user_id)
+  const { types } = await roleservice.findRoleByUserId()
+  if (types.includes('admin') || dataPermission === 'all') {
+    res.json({ code: statusCode.success, result: [], is_admin: 1 })
+  } else {
+    const authservice = new authService()
+    const temp = await authservice.findDeptsByUserid(user_id)
+    const deptids = temp.map(e => e.dept_id)
+    res.json({ code: statusCode.success, result: deptids, is_admin: 0 })
+  }
 })
 
 module.exports = router
