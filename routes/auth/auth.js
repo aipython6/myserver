@@ -8,9 +8,9 @@ const statusCode = require('../../utils/statusCode')
 const token = require('../../utils/signAndverifyToken')
 const authService = require('../../system/service/authService')
 const roleService = require('../../system/service/roleService')
-
 // 获取验证码
 router.get('/code', async (req, res, next) => {
+  const authservice = new authService()
   // 验证码的基本配置
 	const captcha = svgCaptcha.create({
 			size: 4,
@@ -22,50 +22,37 @@ router.get('/code', async (req, res, next) => {
 			fontSize: 38
 	})
 	res.type('svg')
-	const uuid = uuidv4()
+  const uuid = uuidv4()
 	const insert_item = { uuid: uuid, code: captcha.text }
-	sql = `INSERT INTO uuid SET ?`
-	mysqlConnect.query(sql, insert_item, (err, results) => {
-		if (err) {
-			console.error(err)
-		} else {
-			res.json({ img: captcha.data, uuid: uuid, msg: 'success' })
-		}
-	})	
+	if (await authservice.getCode(insert_item)) {
+    res.json({ img: captcha.data, uuid: uuid, msg: 'success' })
+  } else {
+    console.error('获取验证码出错')
+  }
 })
 
 // 用户登录
 router.post('/login', async (req, res, next) => {
   const { username, password, uuid, code } = req.body
-	const query_user = `SELECT * FROM users WHERE username = '${username}'`
-	// 查询uuid
-	const query_uuid = `SELECT uuid, code FROM uuid WHERE uuid = '${uuid}'`
-	mysqlConnect.query(query_uuid, (err, results) => {
-		if (err) {
-			console.log(err)
-		} else {
-			if (!(results[0].code.toLowerCase() === code.toLowerCase())) {
-				res.json({ code: statusCode.verifyCodeError, msg: '验证码错误' })
-			} else {
-				mysqlConnect.query(query_user, async (err, results) => {
-					if (err) {
-						console.error(err)
-					} else {
-						// 该用户存在
-						if (results.length === 1) {
-							if (await comparePassword.passDecode(results[0].password, password)) {
-								res.json({ code: statusCode.success, token: token.sign(username), msg: '登录成功' })
-							} else {
-								res.json({ code: statusCode.passError, msg: '密码错误,请重新输入' })
-							}
-						} else {
-							res.json({ code: statusCode.userNotExist, msg: '登陆失败,该用户不存在' })
-						}
-					}
-				})
-			}
-		}
-	})
+  const authservice = new authService()
+  // 根据username查询用户是否存在
+  const userRes = await authservice.findUserByUsername(username)
+  // 获取uuid
+  const uuidRes = await authservice.findUUID(uuid, code)
+  if (!uuidRes) {
+    res.json({ code: statusCode.verifyCodeError, msg: '验证码错误' })
+  } else {
+    // 该用户存在
+    if (userRes.length === 1) {
+      if (await comparePassword.passDecode(userRes[0].password, password)) {
+        res.json({ code: statusCode.success, token: token.sign(username), msg: '登录成功' })
+      } else {
+        res.json({ code: statusCode.passError, msg: '密码错误,请重新输入' })
+      }
+    } else {
+      res.json({ code: statusCode.userNotExist, msg: '登陆失败,该用户不存在' })
+    }
+  }
 })
 
 // 获取用户信息
