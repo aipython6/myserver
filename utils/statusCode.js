@@ -1,5 +1,4 @@
 // 所有请求的状态码
-
 const statusCode = {
   // 所有请求返回的状态码和提示信息
 	success: 200,
