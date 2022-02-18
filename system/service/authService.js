@@ -4,7 +4,7 @@ class authService {
   constructor() {
     this.authImpl = new authImpl()
   }
-
+  // 获取验证码
   getCode(insert_item) {
     return this.authImpl.getCode(insert_item)
   }
