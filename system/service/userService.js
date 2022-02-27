@@ -4,6 +4,12 @@ class userService {
   constructor() {
     this.userImpl = new userImpl()
   }
+
+  // 获取所有用户
+  findAllUsers(page, size) {
+    return this.userImpl.findAllUsers(page, size)
+  }
+
   // 根据user_id查询用户的所有信息
   findUserinfByUserid(user_id) {
     return this.userImpl.findUserinfByUserid(user_id)

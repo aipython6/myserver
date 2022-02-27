@@ -3,6 +3,39 @@ const moment = require('moment')
 const password = require('../../utils/passBcrypt')
 // 用户管理相关方法的实现
 class userImpl {
+
+  // 获取所有用户
+  findAllUsers(page, size) {
+    const sql = `select * from users where enabled = 1`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result) {
+        if (!err) {
+          const temps = result.map(e => {
+            return {
+              userid: e.user_id,
+              dept_name: e.dept_name,
+              username: e.username,
+              gender: e.gender,
+              avatar_name: e.avatar_name,
+              avatar_path: e.avatar_path,
+              is_admin: e.is_admin === 1 ? '管理员' : '普通用户',
+              create_by: e.create_by,
+              create_time: e.create_time
+            }
+          })
+          const pageList = temps.filter((item, index) => index < size * page && index >= size * (page - 1))
+          const obj = {
+            users: pageList,
+            page: result.length
+          }
+          resolve(obj)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
   // 根据user_id查询用户的所有信息
   findUserinfByUserid(user_id) {
     const sql = `select * from users where user_id = ${user_id}`

@@ -8,6 +8,7 @@ const handleRouter = (menuList) => {
   let childrenList = []
   // 最终符合格式的menu数组
   let resultList = []
+  let num = 0
   menuList.forEach(e => {
     if (!e.pid) {   // 所有的parent
       parentMapTemp.path = '/' + e.path
@@ -31,7 +32,7 @@ const handleRouter = (menuList) => {
       resultList.push(parentMapTemp)
       childrenList = []
     }
-    parentMapTemp = { path: '', component: '', redirect: '', name: '', hidden: 0, meta: {}, children: [] }
+      parentMapTemp = { path: '', component: '', redirect: '', name: '', hidden: 0, meta: {}, children: [] }
   })
   return resultList
 }

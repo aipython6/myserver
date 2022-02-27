@@ -13,7 +13,7 @@ class Cors {
 }
 
 const cors_instance = new Cors({
-  origin: 'http://localhost:8013',
+  origin: ['http://localhost:8013'],
   optionsSuccessStatus: 200,
   allowedHeaders: ['Content-Type', 'authorization']
 });

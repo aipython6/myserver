@@ -5,6 +5,14 @@ const statusCode = require('../../utils/statusCode')
 
 /* 用户相关的所有请求 */
 
+// 获取所有的user
+router.get('/', async (req, res) => {
+  const { page, size } = req.query
+  const userservice = new userService()
+  const users = await userservice.findAllUsers(page, size)
+  res.json({ code: statusCode.success, content: users.users, page: users.page })
+})
+
 // 添加用户
 router.post('/add', async (req, res, next) => {
   const user_item = req.body
