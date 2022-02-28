@@ -17,7 +17,14 @@ class deptImpl {
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {
-          resolve(result)
+          const depts = result.map(e => {
+            return {
+              dept_id: e.dept_id,
+              pid: e.pid,
+              name: e.name
+            }
+          })
+          resolve(depts)
         } else {
           reject(err)
         }

@@ -6,8 +6,8 @@ class userService {
   }
 
   // 获取所有用户
-  findAllUsers(page, size) {
-    return this.userImpl.findAllUsers(page, size)
+  findAllUsers(page, size, dept_id) {
+    return this.userImpl.findAllUsers(page, size, dept_id)
   }
 
   // 根据user_id查询用户的所有信息

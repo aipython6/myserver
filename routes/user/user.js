@@ -7,10 +7,10 @@ const statusCode = require('../../utils/statusCode')
 
 // 获取所有的user
 router.get('/', async (req, res) => {
-  const { page, size } = req.query
+  const { page, size, dept_id } = req.query
   const userservice = new userService()
-  const users = await userservice.findAllUsers(page, size)
-  res.json({ code: statusCode.success, content: users.users, page: users.page })
+  const users = await userservice.findAllUsers(page, size, parseInt(dept_id))
+  res.json({ code: statusCode.success, content: users.users, totalElements: users.page })
 })
 
 // 添加用户
@@ -39,5 +39,7 @@ router.delete('/del', async (req, res, next) => {
     }
   })
 })
+
+
 
 module.exports = router

@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50733
+ Source Server Version : 50732
  Source Host           : localhost:3306
  Source Schema         : myadmin
 
  Target Server Type    : MySQL
- Target Server Version : 50733
+ Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 18/02/2022 17:00:07
+ Date: 28/02/2022 21:41:57
 */
 
 SET NAMES utf8mb4;
@@ -32,68 +32,17 @@ CREATE TABLE `depts`  (
   `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of depts
 -- ----------------------------
-INSERT INTO `depts` VALUES (2, 7, 1, '研发部', 3, 1, 'admin', 'admin', '2019-03-25 09:15:32.000', '2020-08-02 14:48:47.000');
+INSERT INTO `depts` VALUES (2, 7, 1, '财务部', 3, 1, 'admin', 'admin', '2019-03-25 09:15:32.000', '2020-08-02 14:48:47.000');
 INSERT INTO `depts` VALUES (5, 7, 0, '运维部', 4, 1, 'admin', 'admin', '2019-03-25 09:20:44.000', '2020-05-17 14:27:27.000');
 INSERT INTO `depts` VALUES (6, 8, 0, '测试部', 6, 1, 'admin', 'admin', '2019-03-25 09:52:18.000', '2020-06-08 11:59:21.000');
 INSERT INTO `depts` VALUES (7, NULL, 2, '华南分部', 0, 1, 'admin', 'admin', '2019-03-25 11:04:50.000', '2020-06-08 12:08:56.000');
 INSERT INTO `depts` VALUES (8, NULL, 2, '华北分部', 1, 1, 'admin', 'admin', '2019-03-25 11:04:53.000', '2020-05-14 12:54:00.000');
 INSERT INTO `depts` VALUES (15, 8, 0, 'UI部门', 7, 1, 'admin', 'admin', '2020-05-13 22:56:53.000', '2020-05-14 12:54:13.000');
-INSERT INTO `depts` VALUES (17, 2, 0, '研发一组', 999, 1, 'admin', 'admin', '2020-08-02 14:49:07.000', '2020-08-02 14:49:07.000');
-
--- ----------------------------
--- Table structure for dict
--- ----------------------------
-DROP TABLE IF EXISTS `dict`;
-CREATE TABLE `dict`  (
-  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典名称',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
-  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`dict_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典' ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of dict
--- ----------------------------
-INSERT INTO `dict` VALUES (1, 'user_status', '用户状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict` VALUES (4, 'dept_status', '部门状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict` VALUES (5, 'job_status', '岗位状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
-
--- ----------------------------
--- Table structure for dict_detail
--- ----------------------------
-DROP TABLE IF EXISTS `dict_detail`;
-CREATE TABLE `dict_detail`  (
-  `detail_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `dict_id` bigint(11) NULL DEFAULT NULL COMMENT '字典id',
-  `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典标签',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典值',
-  `dict_sort` int(5) NULL DEFAULT NULL COMMENT '排序',
-  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
-  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`detail_id`) USING BTREE,
-  INDEX `FK5tpkputc6d9nboxojdbgnpmyb`(`dict_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典详情' ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of dict_detail
--- ----------------------------
-INSERT INTO `dict_detail` VALUES (1, 1, '激活', 'true', 1, NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict_detail` VALUES (2, 1, '禁用', 'false', 2, NULL, NULL, NULL, NULL);
-INSERT INTO `dict_detail` VALUES (3, 4, '启用', 'true', 1, NULL, NULL, NULL, NULL);
-INSERT INTO `dict_detail` VALUES (4, 4, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict_detail` VALUES (5, 5, '启用', 'true', 1, NULL, NULL, NULL, NULL);
-INSERT INTO `dict_detail` VALUES (6, 5, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
 
 -- ----------------------------
 -- Table structure for jobs
@@ -102,12 +51,12 @@ DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs`  (
   `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位名称',
-  `enabled` int(1) NOT NULL COMMENT '岗位状态',
+  `enabled` bit(1) NOT NULL COMMENT '岗位状态',
   `job_sort` int(5) NULL DEFAULT NULL COMMENT '排序',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`job_id`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
   INDEX `inx_enabled`(`enabled`) USING BTREE
@@ -116,10 +65,10 @@ CREATE TABLE `jobs`  (
 -- ----------------------------
 -- Records of jobs
 -- ----------------------------
-INSERT INTO `jobs` VALUES (8, '人事专员', 1, 3, NULL, NULL, '2019-03-29 14:52:28', NULL);
-INSERT INTO `jobs` VALUES (10, '产品经理', 1, 4, NULL, NULL, '2019-03-29 14:55:51', NULL);
-INSERT INTO `jobs` VALUES (11, '全栈开发', 1, 2, NULL, 'admin', '2019-03-31 13:39:30', '2020-05-05 11:33:43');
-INSERT INTO `jobs` VALUES (12, '软件测试', 1, 5, NULL, 'admin', '2019-03-31 13:39:43', '2020-05-10 19:56:26');
+INSERT INTO `jobs` VALUES (8, '人事专员', b'1', 3, NULL, NULL, '2019-03-29 14:52:28', NULL);
+INSERT INTO `jobs` VALUES (10, '产品经理', b'1', 4, NULL, NULL, '2019-03-29 14:55:51', NULL);
+INSERT INTO `jobs` VALUES (11, '全栈开发', b'1', 2, NULL, 'admin', '2019-03-31 13:39:30', '2020-05-05 11:33:43');
+INSERT INTO `jobs` VALUES (12, '软件测试', b'1', 5, NULL, 'admin', '2019-03-31 13:39:43', '2020-05-10 19:56:26');
 
 -- ----------------------------
 -- Table structure for menus
@@ -143,8 +92,8 @@ CREATE TABLE `menus`  (
   `permission` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`menu_id`) USING BTREE,
   UNIQUE INDEX `uniq_title`(`title`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
@@ -161,7 +110,6 @@ INSERT INTO `menus` VALUES (5, 1, 3, 1, '菜单管理', 'Menu', 'system/menu/ind
 INSERT INTO `menus` VALUES (10, NULL, 5, 0, '组件管理', NULL, 'Layout', 50, 'zujian', 'components', '/zujian/icon', 0, 0, 0, NULL, NULL, NULL, '2018-12-19 13:38:16', NULL);
 INSERT INTO `menus` VALUES (11, 10, 0, 1, '图标库', 'Icons', 'components/icons/index', 51, 'icon', 'icon', NULL, 0, 0, 0, NULL, NULL, NULL, '2018-12-19 13:38:49', NULL);
 INSERT INTO `menus` VALUES (15, 10, 0, 1, '富文本', 'Editor', 'components/Editor', 52, 'fwb', 'tinymce', NULL, 0, 0, 0, NULL, NULL, NULL, '2018-12-27 11:58:25', NULL);
-INSERT INTO `menus` VALUES (28, 1, 3, 1, '任务调度', 'Timing', 'system/timing/index', 999, 'timing', 'timing', NULL, 0, 0, 0, 'timing:list', NULL, NULL, '2019-01-07 20:34:40', NULL);
 INSERT INTO `menus` VALUES (33, 10, 0, 1, 'Markdown', 'Markdown', 'components/MarkDown', 53, 'markdown', 'markdown', NULL, 0, 0, 0, NULL, NULL, NULL, '2019-03-08 13:46:44', NULL);
 INSERT INTO `menus` VALUES (34, 10, 0, 1, 'Yaml编辑器', 'YamlEdit', 'components/YamlEdit', 54, 'dev', 'yaml', NULL, 0, 0, 0, NULL, NULL, NULL, '2019-03-08 15:49:40', NULL);
 INSERT INTO `menus` VALUES (35, 1, 3, 1, '部门管理', 'Dept', 'system/dept/index', 6, 'dept', 'dept', NULL, 0, 0, 0, 'dept:list', NULL, NULL, '2019-03-25 09:46:00', NULL);
@@ -218,8 +166,8 @@ CREATE TABLE `roles`  (
   `data_scope` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据权限',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色的英文名称',
   PRIMARY KEY (`role_id`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
@@ -241,7 +189,7 @@ CREATE TABLE `roles_menus`  (
   `role_id` bigint(20) NULL DEFAULT NULL,
   `menu_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles_menus
@@ -355,7 +303,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `dept_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '部门名称',
-  `dept_id` bigint(20) NULL DEFAULT NULL COMMENT '部门id',
+  `dept_id` int(11) NULL DEFAULT NULL COMMENT '部门id',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `gender` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
@@ -366,9 +314,9 @@ CREATE TABLE `users`  (
   `enabled` int(1) NULL DEFAULT NULL COMMENT '状态：1启用、0禁用',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `pwd_reset_time` datetime NULL DEFAULT NULL COMMENT '修改密码的时间',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `pwd_reset_time` datetime(0) NULL DEFAULT NULL COMMENT '修改密码的时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE,
   UNIQUE INDEX `uniq_username`(`username`) USING BTREE,
@@ -380,7 +328,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '财务部', 2, '10530', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$DUWtP6zaRbQaOtcI1QRzrOzfHJ/npNqOGsnLzo.kgpyEw.3nhh9Uy', 0, 1, 'admin', 'admin', '2022-01-30 20:32:58', '2022-01-30 20:32:58', '2022-01-30 20:32:58');
+INSERT INTO `users` VALUES (1, '财务部', 2, '10530', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$DUWtP6zaRbQaOtcI1QRzrOzfHJ/npNqOGsnLzo.kgpyEw.3nhh9Uy', 1, 1, 'admin', 'admin', '2022-01-30 20:32:58', '2022-01-30 20:32:58', '2022-01-30 20:32:58');
 
 -- ----------------------------
 -- Table structure for users_depts
@@ -391,7 +339,7 @@ CREATE TABLE `users_depts`  (
   `user_id` bigint(20) NULL DEFAULT NULL,
   `dept_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users_depts
@@ -407,13 +355,13 @@ CREATE TABLE `users_roles`  (
   `user_id` bigint(20) NULL DEFAULT NULL,
   `role_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users_roles
 -- ----------------------------
 INSERT INTO `users_roles` VALUES (1, 1, 1);
-INSERT INTO `users_roles` VALUES (2, 2, 2);
+INSERT INTO `users_roles` VALUES (2, 1, 2);
 
 -- ----------------------------
 -- Table structure for uuid
@@ -424,31 +372,32 @@ CREATE TABLE `uuid`  (
   `uuid` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of uuid
 -- ----------------------------
-INSERT INTO `uuid` VALUES (20, 'f4e00017-fe55-4bc7-873f-553e33c284d9', 'fHYU');
-INSERT INTO `uuid` VALUES (21, 'c2e01de4-f738-4219-82be-00c7b74b7138', '6GPK');
-INSERT INTO `uuid` VALUES (22, '04e7f8b8-c3a3-469c-85e8-3b1f5c35806e', 'YavD');
-INSERT INTO `uuid` VALUES (23, '8b40bb96-f119-44a4-a60b-7916a57709d1', 'PHyL');
-INSERT INTO `uuid` VALUES (24, 'aa9eeb10-3781-40b2-958f-2ad80926392a', 'CLeT');
-INSERT INTO `uuid` VALUES (25, '73e95ebd-1118-4335-bde5-8523f133d649', 't5ta');
-INSERT INTO `uuid` VALUES (26, 'd4f8518f-b1ee-4e18-8b99-3c3b08377355', 'z5AY');
-INSERT INTO `uuid` VALUES (27, '58ad6eb6-f5f4-4ba8-81cb-b9b986928b70', 'LgtH');
-INSERT INTO `uuid` VALUES (28, 'bfce9742-a427-4ecc-b470-c9f25f1dc9d9', 'YLsW');
-INSERT INTO `uuid` VALUES (29, 'b5777054-394e-4bec-9d67-2b570756b52e', 'txGx');
-INSERT INTO `uuid` VALUES (30, '159102c6-5486-4d25-91af-3dfed67674c1', 'Lnmu');
-INSERT INTO `uuid` VALUES (31, '3a682b7e-20ca-4ff0-8988-fbbdd224eac7', 'ysXX');
-INSERT INTO `uuid` VALUES (32, '3a682b7e-20ca-4ff0-8988-fbbdd224eac7', 'ysXX');
-INSERT INTO `uuid` VALUES (33, '71ebbcbf-0651-47cb-9d4f-306f613f6525', 'Rz6m');
-INSERT INTO `uuid` VALUES (34, 'ad78579c-432d-4090-b45f-56a888a7407c', 'XVdn');
-INSERT INTO `uuid` VALUES (35, '279bc306-c28b-4ccb-99d7-56002f1ad1f5', 'PGwf');
-INSERT INTO `uuid` VALUES (36, '7d5f22ec-2d93-4069-83bf-c5e7f1f4f730', 'vfvw');
-INSERT INTO `uuid` VALUES (37, '3c9d9386-617e-4bf6-9ddf-156700b00b12', 'B6Eh');
-INSERT INTO `uuid` VALUES (38, 'd54a5d85-f217-45a0-b9eb-b256cc418c7c', 'fbNg');
-INSERT INTO `uuid` VALUES (39, '817ecffe-8a00-4f39-9b8f-cdf5d2ef042f', 'kyyU');
-INSERT INTO `uuid` VALUES (40, 'e6dcd18c-931d-4d9d-925b-a2a4c401e04d', 'hZJe');
+INSERT INTO `uuid` VALUES (1, '349df446-b131-4db1-b357-5ce0d362744a', '4sgsVN');
+INSERT INTO `uuid` VALUES (2, '2a0adc7a-2ee0-4d96-8168-ece807973c76', 'xJnS');
+INSERT INTO `uuid` VALUES (3, '984919ca-9ae3-4003-a55e-2a035271821e', 'kmpY');
+INSERT INTO `uuid` VALUES (4, '7a07b48e-2676-4d9d-982a-1abdc5acb7d6', 'HqJR');
+INSERT INTO `uuid` VALUES (5, 'e4d8cfb0-4d29-464d-9a7d-e767e3e8df6e', 'ruZz');
+INSERT INTO `uuid` VALUES (6, 'b6fc5ab9-28a7-4ad7-adea-86274c81a70b', 'xxky');
+INSERT INTO `uuid` VALUES (7, 'fb44204b-11b1-4917-83b7-a7a3f288b76a', 't2G3');
+INSERT INTO `uuid` VALUES (8, 'dd83cb88-54e9-41a2-ae94-e79274352131', 'QKMW');
+INSERT INTO `uuid` VALUES (9, '53eb8d66-5d24-4094-987a-43216535f1d1', 'n5sN');
+INSERT INTO `uuid` VALUES (10, '50c610e7-c582-4cf7-a1b4-d165ce973def', 'bZJ9');
+INSERT INTO `uuid` VALUES (11, '8bb752e1-6833-4a14-949c-ea418d9b6752', 'DaCH');
+INSERT INTO `uuid` VALUES (12, '8401db3f-b73e-4529-aad5-874e53862d76', 'YPP2');
+INSERT INTO `uuid` VALUES (13, '4b31ddd6-d989-4f62-a7c8-91ddf6d06d29', 'dKVN');
+INSERT INTO `uuid` VALUES (14, '494bc56b-3462-46b2-85da-d5edc9775ccd', '7Le6');
+INSERT INTO `uuid` VALUES (15, '262f6079-04cb-4995-a166-404f9dccf282', '5m7k');
+INSERT INTO `uuid` VALUES (16, '6abbecbf-e641-4583-8352-0f8a861a1c26', 'eZqs');
+INSERT INTO `uuid` VALUES (17, 'bc1f8def-4b75-49d3-a107-37b1061ec9a2', 'nfth');
+INSERT INTO `uuid` VALUES (18, '6ad0db0b-4883-46f9-afd4-bbeaab88435c', '3UbE');
+INSERT INTO `uuid` VALUES (19, 'b1995734-3746-43f3-aac9-b75301a86f62', 'TbHY');
+INSERT INTO `uuid` VALUES (20, 'ef614b90-d504-4a23-9369-fe12431dba23', 'zMpr');
+INSERT INTO `uuid` VALUES (21, 'a3beabe6-6778-4aea-bf94-841a4205a815', 'wEpG');
+INSERT INTO `uuid` VALUES (22, 'ba1dc55d-7996-46df-93e2-09c222f86782', 'AUuu');
 
 SET FOREIGN_KEY_CHECKS = 1;
