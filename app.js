@@ -55,7 +55,7 @@ app.use('/auth', authRouter)
 app.use('/api/users', userRouter)
 app.use('/api/menus', menusRouter)
 app.use('/api/dept', deptRouter)
-app.use('/api/role', roleRouter)
+app.use('/api/roles', roleRouter)
 app.use('/api/job', jobRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

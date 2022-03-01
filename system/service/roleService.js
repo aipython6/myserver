@@ -1,12 +1,11 @@
 const roleImpl = require('../impl/roleImpl')
 class roleService {
-  constructor(user_id) {
+  constructor() {
     this.roleImpl = new roleImpl()
-    this.user_id = user_id
   }
   // 根据user_id查询roles
-  findRoleByUserId() {
-    return this.roleImpl.findRoleByUserId(this.user_id)
+  findRoleByUserId(user_id) {
+    return this.roleImpl.findRoleByUserId(user_id)
   }
   // 获取所有的role
   all() {

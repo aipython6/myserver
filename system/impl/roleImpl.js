@@ -26,7 +26,14 @@ class roleImpl {
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {
-          resolve(result)
+          const roles = result.map(r => {
+            return {
+              id: r.role_id,
+              name: r.name,
+              level: r.level
+            }
+          })
+          resolve(roles)
         } else {
           reject(err)
         }

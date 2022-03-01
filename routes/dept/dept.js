@@ -8,38 +8,42 @@ router.get('/getDepts', async (req, res, next) => {
   const params = req.query
   const deptservice = new deptService()
   const depts = await deptservice.getAllDeptsByParams(params)
-  
-  // 一级的map
-  let firstMap = { name: '', hasChildren: true, children: [] }
-  // 一级map对应的children数组
-  let firstChildrenList = []
+  // 所有部门
+  if (!Boolean(params.children)) {
+    // 一级的map
+    let firstMap = { name: '', hasChildren: true, children: [] }
+    // 一级map对应的children数组
+    let firstChildrenList = []
 
-  // 二级的map
-  let secondMap = { name: '' }
+    // 二级的map
+    let secondMap = { name: '' }
 
-  // 最终depts数组
-  const resultList = []
+    // 最终depts数组
+    const resultList = []
 
-  depts.forEach(f => {
-    if (!f.pid) {
-      firstMap.name = f.name
-      depts.forEach(s => {
-        if (s.pid === f.dept_id) {
-          secondMap.name = s.name
-          firstChildrenList.push(secondMap)
-        }
-        secondMap = { name: '' }
-      })
-      firstMap.children = firstChildrenList
-      resultList.push(firstMap)
-      firstChildrenList = []
-    }
-    firstMap = { name: '', hasChildren: true, children: [] }
-  })
-  res.json({ code: statusCode.success, content: resultList })
+    depts.forEach(f => {
+      if (!f.pid) {
+        firstMap.name = f.name
+        depts.forEach(s => {
+          if (s.pid === f.dept_id) {
+            secondMap.name = s.name
+            firstChildrenList.push(secondMap)
+          }
+          secondMap = { name: '' }
+        })
+        firstMap.children = firstChildrenList
+        resultList.push(firstMap)
+        firstChildrenList = []
+      }
+      firstMap = { name: '', hasChildren: true, children: [] }
+    })
+    res.json({ code: statusCode.success, content: resultList })
+  } else {
+    // 二级部门
+    const deptlist = depts.filter(d => typeof d.pid === 'number').map(e => e.name)
+    res.json({ code: statusCode.success, content: deptlist })
+  }
 })
-
-
 
 router.post('/getDeptSuperior', async (req, res, next) => {
   const { data } = req.body

@@ -60,14 +60,14 @@ router.get('/info', async (req, res, next) => {
   const authservice = new authService()
   const userInfo = await authservice.findUserinfoByUsername(username)
   // 用户角色,可能有多个
-  const roles = userInfo.map(e => {
-    return {
-      roles: e.type,
-      name: e.name,
-      level: e.level,
-      data_scope: e.data_scope,
-      descrption: e.descrption
-    }
+  const roles = userInfo.map(e => { return e.type
+    // return {
+    //   roles: e.type,
+    //   name: e.name,
+    //   level: e.level,
+    //   data_scope: e.data_scope,
+    //   descrption: e.descrption
+    // }
   })
   // 用户基本信息
   const basic_info = {
@@ -95,9 +95,9 @@ router.delete('/logout', async (req, res, next) => {
 router.get('/getPermission', async (req, res, next) => {
   const { type } = req.query
   const user_id = req.headers.userid
-  const roleservice = new roleService(user_id)
+  const roleservice = new roleService()
   // roles:角色id， types:角色名称
-  const { roles, types } = await roleservice.findRoleByUserId()
+  const { roles, types } = await roleservice.findRoleByUserId(user_id)
   const authservice = new authService()
   const temp = await authservice.findPermissionByRolesid(roles, type)
   const roles_ = new Set(types)  // 去除重复的role
@@ -124,8 +124,8 @@ router.get('/getDeptids', async (req, res, next) => {
   // dataPermission:表示数据范围(all:全部,非all:指定部门下的数据)
   const { dataPermission } = req.query
   const user_id = req.headers.userid
-  const roleservice = new roleService(user_id)
-  const { types } = await roleservice.findRoleByUserId()
+  const roleservice = new roleService()
+  const { types } = await roleservice.findRoleByUserId(user_id)
   if (types.includes('admin') || dataPermission === 'all') {
     res.json({ code: statusCode.success, result: [], is_admin: 1 })
   } else {

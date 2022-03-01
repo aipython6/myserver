@@ -7,11 +7,11 @@ class deptImpl {
     const en = Boolean(enabled) === true ? 1 : 0
     let sql = `select * from depts where enabled = ${en}`
     // 部门名称是否可用
-    if (!(name ==='' || name === undefined || name === null)) {
+    if (name) {
       sql += ` and name = '${name}'`
     }
     // 父级部门是否可用
-    if (!(pid ==='' || pid === undefined || pid === null)) {
+    if (pid) {
       sql += ` and pid = ${pid}`
     }
     return new Promise((resolve, reject) => {
