@@ -26,6 +26,12 @@ router.post('/add', async (req, res, next) => {
   })
 })
 
+// 编辑用户
+router.put('/edit', async (req, res, next) => {
+  console.log(req.body)
+  res.json({ code: statusCode.success })
+})
+
 // 删除用户
 router.delete('/del', async (req, res, next) => {
   const { userid } = req.query
