@@ -40,7 +40,10 @@ router.get('/getDepts', async (req, res, next) => {
     res.json({ code: statusCode.success, content: resultList })
   } else {
     // 二级部门
-    const deptlist = depts.filter(d => typeof d.pid === 'number').map(e => e.name)
+    const deptlist = depts.filter(d => typeof d.pid === 'number').map(e => {
+      return {
+        id: e.dept_id, label: e.name
+    }})
     res.json({ code: statusCode.success, content: deptlist })
   }
 })

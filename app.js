@@ -16,6 +16,8 @@ const menusRouter = require('./routes/menus/menus')
 const deptRouter = require('./routes/dept/dept')
 const roleRouter = require('./routes/role/role')
 const jobRouter = require('./routes/job/job')
+const dictRouter = require('./routes/dict/dict')
+
 const app = express();
 
 // view engine setup
@@ -57,6 +59,7 @@ app.use('/api/menus', menusRouter)
 app.use('/api/dept', deptRouter)
 app.use('/api/roles', roleRouter)
 app.use('/api/job', jobRouter)
+app.use('/api/dictDetail', dictRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -11,7 +11,6 @@ class userImpl {
     if (dept_id) {
       sql += ` and dept_id = ${dept_id}`
     }
-    console.log(sql)
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {
