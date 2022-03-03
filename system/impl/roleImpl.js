@@ -68,6 +68,22 @@ class roleImpl {
       })
     })
   }
+
+  //添加一条记录到users_roles
+  add(user_id) {
+    // 默认role_id=2:普通用户
+    const role_id = 2
+    const sql = `insert into users_roles(user_id, role_id) values (${user_id}, ${role_id})`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result){
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
 }
 
 module.exports = roleImpl

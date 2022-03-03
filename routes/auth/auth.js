@@ -7,6 +7,8 @@ const statusCode = require('../../utils/statusCode')
 const token = require('../../utils/signAndverifyToken')
 const authService = require('../../system/service/authService')
 const roleService = require('../../system/service/roleService')
+const handleDate = require('../../utils/handleDate')
+const update_date = handleDate(new Date())
 // 获取验证码
 router.get('/code', async (req, res, next) => {
   const authservice = new authService()
@@ -22,7 +24,7 @@ router.get('/code', async (req, res, next) => {
 	})
 	res.type('svg')
   const uuid = uuidv4()
-	const insert_item = { uuid: uuid, code: captcha.text }
+	const insert_item = { uuid: uuid, code: captcha.text, create_time: update_date }
 	if (await authservice.getCode(insert_item)) {
     res.json({ img: captcha.data, uuid: uuid, msg: 'success' })
   } else {

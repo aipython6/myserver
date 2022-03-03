@@ -4,7 +4,7 @@ const statusCode = require('../../utils/statusCode')
 const roleService = require('../../system/service/roleService')
 
 // 获取所有的roles
-router.get('/all', async(req, res, next) => {
+router.get('/all', async (req, res, next) => {
   const roleservice = new roleService()
   const roles = await roleservice.all()
   res.json({ code: statusCode.success, content: roles })

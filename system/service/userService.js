@@ -22,6 +22,16 @@ class userService {
   del(user_id) {
     return this.userImpl.del(user_id)
   }
+
+  // 根据user_id编辑用户信息
+  edit(userItem) {
+    return this.userImpl.edit(userItem)
+  }
+
+  // 根据username查询用户信息
+  findUserinfoByUsername(username) {
+    return this.userImpl.findUserinfoByUsername(username)
+  }
 }
 
 module.exports = userService

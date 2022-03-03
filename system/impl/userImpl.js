@@ -7,17 +7,18 @@ class userImpl {
 
   // 获取所有用户
   findAllUsers(page, size, dept_id) {
-    let sql = `select * from users where enabled = 1`
+    let sql = `select * from users`
     if (dept_id) {
-      sql += ` and dept_id = ${dept_id}`
+      sql += ` where and dept_id = ${dept_id}`
     }
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {
           const temps = result.map(e => {
             return {
-              userid: e.user_id,
+              id: e.user_id,
               dept: e.dept_name,
+              dept_id: e.dept_id,
               username: e.username,
               gender: e.gender,
               avatar_name: e.avatar_name,
@@ -25,7 +26,8 @@ class userImpl {
               is_admin: e.is_admin === 1 ? '管理员' : '普通用户',
               create_by: e.create_by,
               createTime: handleDate(e.create_time),
-              phone: e.phone
+              phone: e.phone,
+              enabled: e.enabled
             }
           })
           const pageList = temps.filter((item, index) => index < size * page && index >= size * (page - 1))
@@ -54,6 +56,21 @@ class userImpl {
       })
     })
   }
+
+  // 根据username查询用户信息
+  findUserinfoByUsername(username) {
+    const sql = `select * from users where username='${username}'`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
   // 添加用户
   async add(userItem) {
     const item = {
@@ -96,9 +113,31 @@ class userImpl {
       })
     })
   }
-  // 编辑用户信息
-  // edit(userItem) {
+  // 根据user_id编辑用户信息
+  edit(userItem) {
+    const { id, enabled, dept, username, gender, avatar_path, is_admin, createTime, phone, roles, jobs } = userItem
+    // const { id, enabled } = userItem
+    const e = Boolean(enabled) === true ? 1 : 0
+    const i = is_admin === '管理员' ? 1 : 0
+    const update_time = handleDate(new Date())
+    let sql = `update users set username = '${username}', gender = '${gender}', avatar_path='${avatar_path}', enabled = ${e},is_admin = ${i},create_time='${createTime}', update_time = '${update_time}', phone= '${phone}', dept_name = '${dept}' where user_id = ${id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function (err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+  // 根据user_id编辑用户中心信息
+  editUser(userItem) {
+    const { id, enabled, dept, username, gender, avatar_path, is_admin, create_by, createTime, phone, roles, jobs } = userItem
+    const e = Boolean(enabled) === true ? 1 : 0
+    const r = eval(roles)
+    const j = eval(jobs)
+  }
 
-  // }
 }
 module.exports = userImpl

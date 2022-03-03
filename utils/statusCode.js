@@ -20,7 +20,10 @@ const statusCode = {
   delUserError: 206,
 
   // 获取字典数据失败
-  getDictDetailError: 207
+  getDictDetailError: 207,
+
+  // 用户信息更新失败
+  UserinfoEditError: 208
 }
 
 module.exports = statusCode

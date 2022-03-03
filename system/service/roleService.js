@@ -20,6 +20,11 @@ class roleService {
   get(id) {
     return this.roleImpl.level()
   }
+
+  //添加一条记录到users_roles
+  add(user_id) {
+    return this.roleImpl.add(user_id)
+  }
 }
 
 module.exports = roleService

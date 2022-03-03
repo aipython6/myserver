@@ -7,7 +7,6 @@ router.get('/', async (req, res) => {
   const { dictName, page, size } = req.query
   const dictservice = new dictService()
   const { dicts, totalElement } = await dictservice.getDictDetial(dictName, Number.parseInt(page), Number.parseInt(size))
-  console.log(dicts)
   if (totalElement > 0) {
     res.json({ code: statusCode.success, content: dicts, totalElement: totalElement })
   } else {
