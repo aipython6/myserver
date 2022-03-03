@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50732
+ Source Server Version : 50733
  Source Host           : localhost:3306
  Source Schema         : myadmin
 
  Target Server Type    : MySQL
- Target Server Version : 50732
+ Target Server Version : 50733
  File Encoding         : 65001
 
- Date: 28/02/2022 21:41:57
+ Date: 03/03/2022 17:46:41
 */
 
 SET NAMES utf8mb4;
@@ -32,17 +32,67 @@ CREATE TABLE `depts`  (
   `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of depts
 -- ----------------------------
 INSERT INTO `depts` VALUES (2, 7, 1, '财务部', 3, 1, 'admin', 'admin', '2019-03-25 09:15:32.000', '2020-08-02 14:48:47.000');
-INSERT INTO `depts` VALUES (5, 7, 0, '运维部', 4, 1, 'admin', 'admin', '2019-03-25 09:20:44.000', '2020-05-17 14:27:27.000');
-INSERT INTO `depts` VALUES (6, 8, 0, '测试部', 6, 1, 'admin', 'admin', '2019-03-25 09:52:18.000', '2020-06-08 11:59:21.000');
+INSERT INTO `depts` VALUES (5, 7, 0, '人力资源部', 4, 1, 'admin', 'admin', '2019-03-25 09:20:44.000', '2020-05-17 14:27:27.000');
+INSERT INTO `depts` VALUES (6, 8, 0, '院务工作部', 6, 1, 'admin', 'admin', '2019-03-25 09:52:18.000', '2020-06-08 11:59:21.000');
 INSERT INTO `depts` VALUES (7, NULL, 2, '华南分部', 0, 1, 'admin', 'admin', '2019-03-25 11:04:50.000', '2020-06-08 12:08:56.000');
 INSERT INTO `depts` VALUES (8, NULL, 2, '华北分部', 1, 1, 'admin', 'admin', '2019-03-25 11:04:53.000', '2020-05-14 12:54:00.000');
 INSERT INTO `depts` VALUES (15, 8, 0, 'UI部门', 7, 1, 'admin', 'admin', '2020-05-13 22:56:53.000', '2020-05-14 12:54:13.000');
+
+-- ----------------------------
+-- Table structure for dict
+-- ----------------------------
+DROP TABLE IF EXISTS `dict`;
+CREATE TABLE `dict`  (
+  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典名称',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`dict_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of dict
+-- ----------------------------
+INSERT INTO `dict` VALUES (1, 'user_status', '用户状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict` VALUES (4, 'dept_status', '部门状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict` VALUES (5, 'job_status', '岗位状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
+
+-- ----------------------------
+-- Table structure for dict_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `dict_detail`;
+CREATE TABLE `dict_detail`  (
+  `detail_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `dict_id` bigint(11) NULL DEFAULT NULL COMMENT '字典id',
+  `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典标签',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典值',
+  `dict_sort` int(5) NULL DEFAULT NULL COMMENT '排序',
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`detail_id`) USING BTREE,
+  INDEX `FK5tpkputc6d9nboxojdbgnpmyb`(`dict_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典详情' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of dict_detail
+-- ----------------------------
+INSERT INTO `dict_detail` VALUES (1, 1, '激活', 'true', 1, NULL, NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict_detail` VALUES (2, 1, '禁用', 'false', 2, NULL, NULL, NULL, NULL);
+INSERT INTO `dict_detail` VALUES (3, 4, '启用', 'true', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `dict_detail` VALUES (4, 4, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict_detail` VALUES (5, 5, '启用', 'true', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `dict_detail` VALUES (6, 5, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
 
 -- ----------------------------
 -- Table structure for jobs
@@ -55,8 +105,8 @@ CREATE TABLE `jobs`  (
   `job_sort` int(5) NULL DEFAULT NULL COMMENT '排序',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`job_id`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
   INDEX `inx_enabled`(`enabled`) USING BTREE
@@ -92,8 +142,8 @@ CREATE TABLE `menus`  (
   `permission` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`menu_id`) USING BTREE,
   UNIQUE INDEX `uniq_title`(`title`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
@@ -166,8 +216,8 @@ CREATE TABLE `roles`  (
   `data_scope` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据权限',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色的英文名称',
   PRIMARY KEY (`role_id`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
@@ -189,7 +239,7 @@ CREATE TABLE `roles_menus`  (
   `role_id` bigint(20) NULL DEFAULT NULL,
   `menu_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of roles_menus
@@ -314,21 +364,23 @@ CREATE TABLE `users`  (
   `enabled` int(1) NULL DEFAULT NULL COMMENT '状态：1启用、0禁用',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `pwd_reset_time` datetime(0) NULL DEFAULT NULL COMMENT '修改密码的时间',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `pwd_reset_time` datetime NULL DEFAULT NULL COMMENT '修改密码的时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE,
   UNIQUE INDEX `uniq_username`(`username`) USING BTREE,
   INDEX `FK5rwmryny6jthaaxkogownknqp`(`dept_name`) USING BTREE,
   INDEX `FKpq2dhypk2qgt68nauh2by22jb`(`avatar_name`) USING BTREE,
   INDEX `inx_enabled`(`enabled`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (1, '财务部', 2, '10530', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$DUWtP6zaRbQaOtcI1QRzrOzfHJ/npNqOGsnLzo.kgpyEw.3nhh9Uy', 1, 1, 'admin', 'admin', '2022-01-30 20:32:58', '2022-01-30 20:32:58', '2022-01-30 20:32:58');
+INSERT INTO `users` VALUES (2, '人力资源部', 5, '10531', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$7H805QbW0ZPr8OSnvuP11.69idunc3oRoOU1QBusz/oQHltE0iPoS', 0, 1, 'admin', 'admin', '2022-03-03 15:17:45', '2022-03-03 15:17:45', '2022-03-03 16:05:47');
+INSERT INTO `users` VALUES (11, '院务工作部', NULL, '10533', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$7biIcHDCjruH6b6/5VfyIONN8wM6EDuOKwG136OPx5Z7FfcGXMF9m', 0, 1, 'admin', 'admin', '2022-03-03 17:39:23', '2022-03-03 17:39:23', '2022-03-03 17:39:23');
 
 -- ----------------------------
 -- Table structure for users_depts
@@ -339,12 +391,29 @@ CREATE TABLE `users_depts`  (
   `user_id` bigint(20) NULL DEFAULT NULL,
   `dept_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users_depts
 -- ----------------------------
 INSERT INTO `users_depts` VALUES (1, 1, 2);
+
+-- ----------------------------
+-- Table structure for users_jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `users_jobs`;
+CREATE TABLE `users_jobs`  (
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `job_id` bigint(20) NOT NULL COMMENT '岗位ID',
+  PRIMARY KEY (`user_id`, `job_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of users_jobs
+-- ----------------------------
+INSERT INTO `users_jobs` VALUES (1, 11);
+INSERT INTO `users_jobs` VALUES (2, 12);
+INSERT INTO `users_jobs` VALUES (11, 8);
 
 -- ----------------------------
 -- Table structure for users_roles
@@ -355,13 +424,14 @@ CREATE TABLE `users_roles`  (
   `user_id` bigint(20) NULL DEFAULT NULL,
   `role_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users_roles
 -- ----------------------------
 INSERT INTO `users_roles` VALUES (1, 1, 1);
-INSERT INTO `users_roles` VALUES (2, 1, 2);
+INSERT INTO `users_roles` VALUES (2, 2, 2);
+INSERT INTO `users_roles` VALUES (6, 11, 2);
 
 -- ----------------------------
 -- Table structure for uuid
@@ -371,33 +441,13 @@ CREATE TABLE `uuid`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uuid` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `create_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of uuid
 -- ----------------------------
-INSERT INTO `uuid` VALUES (1, '349df446-b131-4db1-b357-5ce0d362744a', '4sgsVN');
-INSERT INTO `uuid` VALUES (2, '2a0adc7a-2ee0-4d96-8168-ece807973c76', 'xJnS');
-INSERT INTO `uuid` VALUES (3, '984919ca-9ae3-4003-a55e-2a035271821e', 'kmpY');
-INSERT INTO `uuid` VALUES (4, '7a07b48e-2676-4d9d-982a-1abdc5acb7d6', 'HqJR');
-INSERT INTO `uuid` VALUES (5, 'e4d8cfb0-4d29-464d-9a7d-e767e3e8df6e', 'ruZz');
-INSERT INTO `uuid` VALUES (6, 'b6fc5ab9-28a7-4ad7-adea-86274c81a70b', 'xxky');
-INSERT INTO `uuid` VALUES (7, 'fb44204b-11b1-4917-83b7-a7a3f288b76a', 't2G3');
-INSERT INTO `uuid` VALUES (8, 'dd83cb88-54e9-41a2-ae94-e79274352131', 'QKMW');
-INSERT INTO `uuid` VALUES (9, '53eb8d66-5d24-4094-987a-43216535f1d1', 'n5sN');
-INSERT INTO `uuid` VALUES (10, '50c610e7-c582-4cf7-a1b4-d165ce973def', 'bZJ9');
-INSERT INTO `uuid` VALUES (11, '8bb752e1-6833-4a14-949c-ea418d9b6752', 'DaCH');
-INSERT INTO `uuid` VALUES (12, '8401db3f-b73e-4529-aad5-874e53862d76', 'YPP2');
-INSERT INTO `uuid` VALUES (13, '4b31ddd6-d989-4f62-a7c8-91ddf6d06d29', 'dKVN');
-INSERT INTO `uuid` VALUES (14, '494bc56b-3462-46b2-85da-d5edc9775ccd', '7Le6');
-INSERT INTO `uuid` VALUES (15, '262f6079-04cb-4995-a166-404f9dccf282', '5m7k');
-INSERT INTO `uuid` VALUES (16, '6abbecbf-e641-4583-8352-0f8a861a1c26', 'eZqs');
-INSERT INTO `uuid` VALUES (17, 'bc1f8def-4b75-49d3-a107-37b1061ec9a2', 'nfth');
-INSERT INTO `uuid` VALUES (18, '6ad0db0b-4883-46f9-afd4-bbeaab88435c', '3UbE');
-INSERT INTO `uuid` VALUES (19, 'b1995734-3746-43f3-aac9-b75301a86f62', 'TbHY');
-INSERT INTO `uuid` VALUES (20, 'ef614b90-d504-4a23-9369-fe12431dba23', 'zMpr');
-INSERT INTO `uuid` VALUES (21, 'a3beabe6-6778-4aea-bf94-841a4205a815', 'wEpG');
-INSERT INTO `uuid` VALUES (22, 'ba1dc55d-7996-46df-93e2-09c222f86782', 'AUuu');
+INSERT INTO `uuid` VALUES (28, '8274d2c4-db23-4f3f-820f-81e8042319f1', 'nTph', '2022-03-03 14:55:27');
 
 SET FOREIGN_KEY_CHECKS = 1;
