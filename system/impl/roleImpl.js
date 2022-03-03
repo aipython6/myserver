@@ -1,4 +1,5 @@
 const mysqlConnect = require('../../database/mysql_config')
+const DBUtils = require('../../utils/databaseUtils')
 // role相关的实现方法
 class roleImpl {
   // 根据user_id查询role_id
@@ -26,14 +27,7 @@ class roleImpl {
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {
-          const roles = result.map(r => {
-            return {
-              id: r.role_id,
-              name: r.name,
-              level: r.level
-            }
-          })
-          resolve(roles)
+          resolve(result)
         } else {
           reject(err)
         }
@@ -82,6 +76,16 @@ class roleImpl {
           reject(err)
         }
       })
+    })
+  }
+  // 根据user_id更新users_roles
+  editUserRolesByUserid(data) {
+    const { user_id, roles } = data
+    const params = { id: user_id, typeids: roles }
+    const db = new DBUtils()
+    const cu = db.updateOrInsert('users_roles', params)
+    return new Promise((resolve, reject) => {
+      resolve(cu)
     })
   }
 }

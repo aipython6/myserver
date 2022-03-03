@@ -1,4 +1,5 @@
 const mysqlConnect = require('../../database/mysql_config')
+const DBUtils = require('../../utils/databaseUtils')
 class jobImpl {
   // 获取所有job
   all(params) {
@@ -19,7 +20,7 @@ class jobImpl {
 
   // 根据userid获取所有的job
   findJobsByUserId(user_id) {
-    const sql = `select * from users_jobs where user_id = ${user_id}`
+    const sql = `select a.job_id,b.name from users_jobs a left join jobs b on a.job_id=b.job_id where a.user_id = ${user_id}`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result){
         if (!err) {
@@ -38,6 +39,22 @@ class jobImpl {
     const sql = `insert into users_jobs (user_id, job_id) values (${user_id}, ${job_id})`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result){
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 根据userid更新数据到usres_jobs
+  // 根据user_id更新users_jobs
+  editUserJobsByUserid(data) {
+    const { user_id, job_id } = data
+    const sql = `update users_jobs set job_id = ${job_id} where user_id = ${user_id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
         if (!err) {
           resolve(result)
         } else {

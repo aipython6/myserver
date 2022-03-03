@@ -25,6 +25,10 @@ class roleService {
   add(user_id) {
     return this.roleImpl.add(user_id)
   }
+
+  editUserRolesByUserid(data) {
+    return this.roleImpl.editUserRolesByUserid(data)
+  }
 }
 
 module.exports = roleService

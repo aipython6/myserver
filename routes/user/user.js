@@ -89,13 +89,21 @@ router.post('/add', async (req, res, next) => {
 
 // 编辑用户
 router.put('/edit', async (req, res, next) => {
+  const { id, roles, jobs } = req.body
+  const role_obj = { user_id: id, roles: roles.map(e => e.id) }
+  const job_obj = { user_id: id, job_id: jobs[0].id }
   const userservice = new userService()
-  const result = await userservice.edit(req.body)
-  if (result.affectedRows > 0) {
+  const roleservice = new roleService()
+  const jobservice = new jobService()
+  const result_info = await userservice.edit(req.body)
+  const result_role = await roleservice.editUserRolesByUserid(role_obj)
+  const result_job = await jobservice.editUserJobsByUserid(job_obj)
+  if (result_info.affectedRows > 0 && result_role && result_job.affectedRows > 0) {
     res.json({ code: statusCode.success, msg: '更新成功' })
   } else {
     res.json({ code: statusCode.UserinfoEditError, msg: '更新失败' })
   }
+  res.json({ code: statusCode.success})
 })
 
 // 删除用户

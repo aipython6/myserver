@@ -13,6 +13,9 @@ class jobService {
   add(user_id) {
     return this.jobImpl.add(user_id)
   }
+  editUserJobsByUserid(data) {
+    return this.jobImpl.editUserJobsByUserid(data)
+  }
  }
 
 module.exports = jobService

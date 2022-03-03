@@ -115,7 +115,7 @@ class userImpl {
   }
   // 根据user_id编辑用户信息
   edit(userItem) {
-    const { id, enabled, dept, username, gender, avatar_path, is_admin, createTime, phone, roles, jobs } = userItem
+    const { id, enabled, dept, username, gender, avatar_path, is_admin, createTime, phone } = userItem
     // const { id, enabled } = userItem
     const e = Boolean(enabled) === true ? 1 : 0
     const i = is_admin === '管理员' ? 1 : 0
