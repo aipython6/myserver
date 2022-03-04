@@ -10,8 +10,8 @@ class jobService {
   findJobsByUserId(user_id) {
     return this.jobImpl.findJobsByUserId(user_id)
   }
-  add(user_id) {
-    return this.jobImpl.add(user_id)
+  add(user_id, job_id) {
+    return this.jobImpl.add(user_id, job_id)
   }
   editUserJobsByUserid(data) {
     return this.jobImpl.editUserJobsByUserid(data)

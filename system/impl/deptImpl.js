@@ -32,6 +32,20 @@ class deptImpl {
     })
   }
 
+  // 根据deptid获取对应的deptname
+  getDeptnameByDeptid(dept_id) {
+    const sql = `select name from depts where dept_id = ${dept_id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function(err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+  
   // 获取所有父级部门
   getAllSuperDepts(ids) {
     const sql = `select * from depts where dept_id in (?)`

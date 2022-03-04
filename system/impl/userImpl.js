@@ -23,7 +23,7 @@ class userImpl {
               gender: e.gender,
               avatar_name: e.avatar_name,
               avatar_path: e.avatar_path,
-              is_admin: e.is_admin === 1 ? '管理员' : '普通用户',
+              is_admin: e.is_admin === 1 ? '超级管理员' : '普通用户',
               create_by: e.create_by,
               createTime: handleDate(e.create_time),
               phone: e.phone,
@@ -74,15 +74,16 @@ class userImpl {
   // 添加用户
   async add(userItem) {
     const item = {
-      username: userItem.user_name,	// 职工号
+      username: userItem.username,	// 职工号
       dept_name: userItem.dept_name,
+      dept_id: userItem.dept_id,
       gender: userItem.gender,
       phone: userItem.phone,
-      password: await password.passEncode(userItem.password),
+      password: await password.passEncode('123456'),  // 初始密码默认为:123456
       avatar_name: userItem.avatar_name || '用户头像',
       avatar_path: userItem.avatar_path || 'http://localhost:8000/images/avatar/default.png',
       is_admin: userItem.is_admin || 0,
-      enabled: userItem.enabled || 1,
+      enabled: JSON.parse(userItem.enabled) ? 1: 0,
       create_by: userItem.create_by || 'admin',
       update_by: userItem.update_by || 'admin',
       pwd_reset_time: moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss'),
@@ -115,12 +116,11 @@ class userImpl {
   }
   // 根据user_id编辑用户信息
   edit(userItem) {
-    const { id, enabled, dept, username, gender, avatar_path, is_admin, createTime, phone } = userItem
-    // const { id, enabled } = userItem
-    const e = Boolean(enabled) === true ? 1 : 0
-    const i = is_admin === '管理员' ? 1 : 0
+    const { id, enabled, deptname, username, gender, avatar_path, is_admin, createTime, phone, dept_id } = userItem
+    const e = JSON.parse(enabled) ? 1 : 0
+    const i = is_admin === '超级管理员' ? 1 : 0
     const update_time = handleDate(new Date())
-    let sql = `update users set username = '${username}', gender = '${gender}', avatar_path='${avatar_path}', enabled = ${e},is_admin = ${i},create_time='${createTime}', update_time = '${update_time}', phone= '${phone}', dept_name = '${dept}' where user_id = ${id}`
+    let sql = `update users set username = '${username}', gender = '${gender}', avatar_path='${avatar_path}', enabled = ${e},is_admin = ${i},create_time='${createTime}', update_time = '${update_time}', phone= '${phone}', dept_name = '${deptname}', dept_id = ${dept_id} where user_id = ${id}`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function (err, result) {
         if (!err) {

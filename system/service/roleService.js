@@ -22,8 +22,8 @@ class roleService {
   }
 
   //添加一条记录到users_roles
-  add(user_id) {
-    return this.roleImpl.add(user_id)
+  add(user_id, role_id) {
+    return this.roleImpl.add(user_id, role_id)
   }
 
   editUserRolesByUserid(data) {

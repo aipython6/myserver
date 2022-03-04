@@ -33,9 +33,9 @@ class jobImpl {
   }
 
   // 插入一条记录到users_jobs中
-  add(user_id) {
+  add(user_id, job_id) {
     // 默认人事专员
-    const job_id = 8
+    // const job_id = 8
     const sql = `insert into users_jobs (user_id, job_id) values (${user_id}, ${job_id})`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result){
