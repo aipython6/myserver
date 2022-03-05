@@ -1,4 +1,5 @@
 const mysqlConnect = require('../../database/mysql_config')
+const handleDate = require('../../utils/handleDate')
 const DBUtils = require('../../utils/databaseUtils')
 // role相关的实现方法
 class roleImpl {
@@ -22,12 +23,23 @@ class roleImpl {
   }
 
   // 获取所有的role
-  all() {
+  all(page, size) {
     const sql = `select * from roles`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {
-          resolve(result)
+          const roles = result.map(r => {
+            return {
+              id: r.role_id,
+              name: r.name,
+              level: r.level,
+              description: r.description,
+              dataScope: r.data_scope,
+              createTime: handleDate(r.create_time)
+            }
+          })
+          const pageList = roles.filter((item, index) => index < size * page && index >= size * (page - 1))
+          resolve({ roles: pageList, totalElements: roles.length })
         } else {
           reject(err)
         }
@@ -36,8 +48,8 @@ class roleImpl {
   }
 
   // 获取所有的level
-  level() {
-    const sql = `select level from roles`
+  level(role_id) {
+    const sql = `select level from roles where role_id = ${role_id}`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result){
         if (!err) {
@@ -86,6 +98,20 @@ class roleImpl {
     const cu = db.updateOrInsert('users_roles', params)
     return new Promise((resolve, reject) => {
       resolve(cu)
+    })
+  }
+
+  // 根据userid删除对应的记录
+  delUserRolesByUserid(user_ids) {
+    const sql = `delete from users_roles where user_id in (?)`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, [user_ids], function(err, result){
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
     })
   }
 }

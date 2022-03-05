@@ -26,7 +26,7 @@ router.get('/code', async (req, res, next) => {
   const uuid = uuidv4()
 	const insert_item = { uuid: uuid, code: captcha.text, create_time: update_date }
 	if (await authservice.getCode(insert_item)) {
-    res.json({ img: captcha.data, uuid: uuid, msg: 'success' })
+    res.json({ code: statusCode.success, img: captcha.data, uuid: uuid, msg: 'success' })
   } else {
     console.error('获取验证码出错')
   }
@@ -104,19 +104,26 @@ router.get('/getPermission', async (req, res, next) => {
   const temp = await authservice.findPermissionByRolesid(roles, type)
   const roles_ = new Set(types)  // 去除重复的role
   const permissions = [...new Set(temp.map(e => e.permission))]  // 去除重复的CURD操作名称
+  let result = {list: [], add: [], edit: [], del: []}
   // list
-  const list = permissions.filter(e => e === type+':list')
+  const list = permissions.filter(e => e === type + ':list')
+  if (list.length > 0) {
+    result.list = [...roles_, ...list]
+  }
   // add
   const add = permissions.filter(e => e === type+':add')
+  if (add.length > 0) {
+    result.add = [...roles_, ...add]
+  }
   // edit
   const edit = permissions.filter(e => e === type+':edit')
+  if (edit.length > 0) {
+    result.edit = [...roles_, ...edit]
+  }
   // del
   const del = permissions.filter(e => e === type+':del')
-  const result = {
-    list: [...roles_, ...list],
-    add: [...roles_, ...add],
-    edit: [...roles_, ...edit],
-    del: [...roles_, ...del]
+  if (del.length > 0) {
+    result.del = [...roles_, ...del]
   }
   res.json({ code: statusCode.success, permissions: result })
 })

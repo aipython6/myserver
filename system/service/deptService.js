@@ -13,6 +13,13 @@ class deptService {
   getDeptnameByDeptid(dept_id) {
     return this.deptImpl.getDeptnameByDeptid(dept_id)
   }
+  add(params) {
+    return this.deptImpl.add(params)
+  }
+  delUsersDeptsByUuserid(user_ids) {
+    return this.deptImpl.delUsersDeptsByUuserid(user_ids)
+  }
+  
 }
 
 module.exports = deptService

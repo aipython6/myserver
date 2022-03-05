@@ -73,6 +73,7 @@ class userImpl {
 
   // 添加用户
   async add(userItem) {
+    console.log(userItem)
     const item = {
       username: userItem.username,	// 职工号
       dept_name: userItem.dept_name,
@@ -82,7 +83,7 @@ class userImpl {
       password: await password.passEncode('123456'),  // 初始密码默认为:123456
       avatar_name: userItem.avatar_name || '用户头像',
       avatar_path: userItem.avatar_path || 'http://localhost:8000/images/avatar/default.png',
-      is_admin: userItem.is_admin || 0,
+      is_admin: userItem.roles.includes(e => e.id === 1).length > 0 ? 1 : 0,  // role_id=1为超级管理员
       enabled: JSON.parse(userItem.enabled) ? 1: 0,
       create_by: userItem.create_by || 'admin',
       update_by: userItem.update_by || 'admin',
@@ -102,10 +103,10 @@ class userImpl {
     })
   }
   // 删除用户
-  del(user_id) {
-    const sql = ` DELETE FROM users where user_id = ${user_id} `
+  del(user_ids) {
+    const sql = ` DELETE FROM users where user_id in (?) `
     return new Promise((resolve, reject) => {
-      mysqlConnect.query(sql, user_id, function (err, result) {
+      mysqlConnect.query(sql, [user_ids], function (err, result) {
         if (!err) {
           resolve(result)
         } else {

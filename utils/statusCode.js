@@ -1,5 +1,6 @@
 // 所有请求的状态码
 const statusCode = {
+  statusErrorCode: 306,
   // 所有请求返回的状态码和提示信息
 	success: 200,
 	// 1. 用户登录

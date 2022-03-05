@@ -63,6 +63,19 @@ class jobImpl {
       })
     })
   }
+
+  delUsersJobsByUserid(user_ids) {
+    const sql = `delete from users_jobs where user_id in (?)`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, [user_ids], (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
 }
 
 module.exports = jobImpl

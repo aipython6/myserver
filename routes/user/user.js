@@ -7,6 +7,8 @@ const roleService = require('../../system/service/roleService')
 const jobService = require('../../system/service/jobService')
 const authService = require('../../system/service/authService')
 const deptService = require('../../system/service/deptService')
+const handleError = require('../../utils/handleError')
+
 /* 用户相关的所有请求 */
 
 // 获取所有的user
@@ -68,23 +70,24 @@ router.get('/', async (req, res) => {
 // 添加用户
 router.post('/add', async (req, res, next) => {
   const user_item = req.body
-  // console.log(user_item)
   const userservice = new userService()
   const roleservice = new roleService()
   const authservice = new authService()
   const jobservice = new jobService()
   const deptservice = new deptService()
-  try { 
+  try {
     // 根据deptid查询deptname
     const dept_name = await deptservice.getDeptnameByDeptid(user_item.dept_id)
     const obj = Object.assign(user_item, { dept_name: dept_name[0].name })
     // 该用户是否已经存在
     const userRes = await authservice.findUserByUsername(obj.username)
     // 用户名不存在时,才允许添加
-    if (!(userRes.length === 1)) {
+    if (userRes.length === 0) {
       let addRole_result = false
       const result = await userservice.add(obj)
+      console.log(result)
       const userItem = await userservice.findUserinfoByUsername(obj.username)
+      
       // 一个用户可能有多个角色
       for (let r of obj.roles) {
         let t = await roleservice.add(userItem[0].user_id, r.id)
@@ -93,19 +96,19 @@ router.post('/add', async (req, res, next) => {
         }
       }
       const addJob_result = await jobservice.add(userItem[0].user_id, obj.jobs[0].id)
+      const addDept_result = await deptservice.add({ user_id: userItem[0].user_id, dept_id: obj.dept_id })
       // console.log(addJob_result)
       // console.log(addRole_result)
-      if (result.affectedRows > 0 && addRole_result && addJob_result.affectedRows > 0) {
+      if (result.affectedRows > 0 && addRole_result && addJob_result.affectedRows > 0 && addDept_result.affectedRows > 0) {
           res.json({ code: statusCode.success, msg: '添加用户成功' })
         } else {
-          throw new Error({ code: statusCode.addUserError, message: '添加用户失败' })
+          throw new handleError({ message: '添加用户失败', name: 'handleError', status: statusCode.addUserError })
         }
     } else {
-      // res.json({ code: statusCode.addUserError, msg: '该用户已经存在' })
-      throw new Error('该用户已经存在')
+      throw new handleError({ message: '该用户已经存在', name: 'handleError', status: statusCode.addUserError })
     }
   } catch (err) {
-    res.status(statusCode.addUserError).json(err)
+    res.status(statusCode.statusErrorCode).json(err)
   }
 })
 
@@ -134,15 +137,21 @@ router.put('/edit', async (req, res, next) => {
 
 // 删除用户
 router.delete('/del', async (req, res, next) => {
-  const { userid } = req.query
+  const user_ids = req.body
   const userservice = new userService()
-  userservice.del(userid).then(result => {
-    if (result) {
-      res.json({ code: statusCode.success, msg: '删除用户成功' })
-    } else {
-      res.json({ code: statusCode.delUserError, msg: '删除用户失败' })
-    }
-  })
+  const roleservice = new roleService()
+  const jobservice = new jobService()
+  const deptservice = new deptService()
+
+  const del_user_res = await userservice.del(user_ids)
+  const del_role_res = await roleservice.delUserRolesByUserid(user_ids)
+  const del_job_res = await jobservice.delUsersJobsByUserid(user_ids)
+  const del_dept_res = await deptservice.delUsersDeptsByUuserid(user_ids)
+  if (del_user_res.affectedRows > 0 && del_role_res.affectedRows > 0 && del_job_res.affectedRows > 0 && del_dept_res.affectedRows > 0) {
+    res.json({ code: statusCode.success, msg: '删除成功'})
+  } else {
+    res.json({ code: statusCode.delUserError, msg: '删除用户失败' })
+  }
 })
 
 

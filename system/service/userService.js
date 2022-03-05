@@ -19,8 +19,8 @@ class userService {
     return this.userImpl.add(userItem)
   }
   // 删除用户
-  del(user_id) {
-    return this.userImpl.del(user_id)
+  del(user_ids) {
+    return this.userImpl.del(user_ids)
   }
 
   // 根据user_id编辑用户信息

@@ -7,7 +7,7 @@ class menuImpl {
     const new_type = type || 2
     const sql = ` select distinct m.* FROM menus m, roles_menus r WHERE m.menu_id = r.menu_id AND r.role_id IN (?) AND type != ${new_type} order by m.menu_id asc `
     return new Promise((resolve, reject) => {
-      mysqlConnect.query(sql, [roles], function (err, result) {
+      mysqlConnect.query(sql, [roles], (err, result) => {
         if (!err) {
           resolve(result.map(e => {
             return {
@@ -17,6 +17,32 @@ class menuImpl {
               update_by: e.update_by, create_time: e.create_time, update_time: e.update_time
             }
           }))
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  findMenuByPid(pid) {
+    const sql = `select * from menus where pid = ${pid}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  findChildByMenuid(id) {
+    const sql = `select * from menus where menu_id = ${id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
         } else {
           reject(err)
         }

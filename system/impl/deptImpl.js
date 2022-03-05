@@ -59,6 +59,34 @@ class deptImpl {
       })
     })
   }
+
+  // 添加一条记录
+  add(params) {
+    const { user_id, dept_id } = params
+    const sql = `insert into users_depts (user_id, dept_id) values (${user_id}, ${dept_id})`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  delUsersDeptsByUuserid(user_ids) {
+    const sql = `delete from users_depts where user_id in (?)`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, [user_ids], function(err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
 }
 
 module.exports = deptImpl

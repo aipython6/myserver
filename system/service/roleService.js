@@ -8,17 +8,17 @@ class roleService {
     return this.roleImpl.findRoleByUserId(user_id)
   }
   // 获取所有的role
-  all() {
-    return this.roleImpl.all()
+  all(page, size) {
+    return this.roleImpl.all(page, size)
   }
   // 获取所有的level
   level() {
     return this.roleImpl.level()
   }
 
-  // 根据id获取对应的role
-  get(id) {
-    return this.roleImpl.level()
+  // 根据role_id获取对应的role
+  get(role_id) {
+    return this.roleImpl.level(role_id)
   }
 
   //添加一条记录到users_roles
@@ -28,6 +28,10 @@ class roleService {
 
   editUserRolesByUserid(data) {
     return this.roleImpl.editUserRolesByUserid(data)
+  }
+
+  delUserRolesByUserid(user_ids) {
+    return this.roleImpl.delUserRolesByUserid(user_ids)
   }
 }
 
