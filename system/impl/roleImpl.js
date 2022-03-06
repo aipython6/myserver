@@ -114,6 +114,20 @@ class roleImpl {
       })
     })
   }
+
+  // 添加role
+  addRole(params) {
+    const sql = `insert into roles set ? `
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, [params], function(err, result){
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
 }
 
 module.exports = roleImpl

@@ -33,6 +33,10 @@ class roleService {
   delUserRolesByUserid(user_ids) {
     return this.roleImpl.delUserRolesByUserid(user_ids)
   }
+
+  addRole(params) {
+    return this.roleImpl.addRole(params)
+  }
 }
 
 module.exports = roleService

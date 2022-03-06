@@ -16,6 +16,21 @@ class menuService {
   findChildByMenuid(id) {
     return this.menuImpl.findChildByMenuid(id)
   }
+  getMenusByRoleid(role_id) {
+    return this.menuImpl.getMenusByRoleid(role_id)
+  }
+
+  editMenus(id, menu_id) {
+    return this.menuImpl.editMenus(id, menu_id)
+  }
+
+  // 根据role_id删除对应的menu_id
+  delMenus(id) {
+    return this.menuImpl.delMenus(id)
+  }
+  all(params) {
+    return this.menuImpl.all(params)
+  }
 }
 
 module.exports = menuService

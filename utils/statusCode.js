@@ -24,7 +24,13 @@ const statusCode = {
   getDictDetailError: 207,
 
   // 用户信息更新失败
-  UserinfoEditError: 208
+  UserinfoEditError: 208,
+
+  // 菜单保存失败
+  editMenusError: 209,
+
+  // 添加role失败
+  addRoleError: 210
 }
 
 module.exports = statusCode
