@@ -4,7 +4,7 @@ const statusCode = require('../../utils/statusCode')
 const menuService = require('../../system/service/menuService')
 const roleService = require('../../system/service/roleService')
 const handleRouter = require('../../utils/handleRouter')
-const handleMenu = require('../../utils/handleMenu')
+const { handleMenu2, handleMenu3 } = require('../../utils/handleMenu')
 // 获取某个角色下的所有菜单
 router.get('/build', async (req, res, next) => {
 	// const { user_id } = req.query
@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
   const { page, size, pid } = req.query
   const menuservice = new menuService()
   const { menus, totalElements } = await menuservice.all({ page: page, size: size })
-  const list = handleMenu(menus)
+  const list = handleMenu2(menus, parseInt(pid))
   res.json({ code: statusCode.success, content: list, totalElements: totalElements})
 })
 module.exports = router
