@@ -20,6 +20,10 @@ class menuService {
     return this.menuImpl.getMenusByRoleid(role_id)
   }
 
+  getMenuByMenuid(menu_id) {
+    return this.menuImpl.getMenuByMenuid(menu_id)
+  }
+
   editMenus(id, menu_id) {
     return this.menuImpl.editMenus(id, menu_id)
   }

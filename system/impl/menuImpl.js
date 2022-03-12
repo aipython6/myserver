@@ -74,6 +74,20 @@ class menuImpl {
     })
   }
 
+  // 根据menu_id获取对应的记录
+  getMenuByMenuid(menu_id) {
+    const sql = `select * from menus where menu_id = ${menu_id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
   // 根据role_id保存menu_id到roles_menus中
   editMenus(id, menu_id) {
     const sql = `insert into roles_menus (role_id, menu_id) values (${id}, ${menu_id})`
@@ -105,6 +119,7 @@ class menuImpl {
   // 获取全部的menus
   all(params) {
     const { page, size } = params
+    let pageList = []
     const sql = `select * from menus`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, (err, result) => {
@@ -125,7 +140,11 @@ class menuImpl {
               createTime : handleDate(e.create_time),
             }
           })
-          const pageList = menus.filter((item, index) => index < size * page && index >= size * (page - 1))
+          if (page && size) {
+            pageList = menus.filter((item, index) => index < size * page && index >= size * (page - 1))
+          } else {
+            pageList = menus
+          }
           const total = menus.filter(e => e.type === 0).length
           resolve({ menus: pageList, totalElements: total })
         } else {

@@ -9,7 +9,7 @@ router.get('/getDepts', async (req, res, next) => {
   const deptservice = new deptService()
   const depts = await deptservice.getAllDeptsByParams(params)
   // 所有部门
-  if (!(params.children)) {
+  if (!JSON.parse(params.children)) {
     // 一级的map
     let firstMap = { id: '', name: '', hasChildren: true, children: [] }
     // 一级map对应的children数组

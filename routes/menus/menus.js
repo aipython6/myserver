@@ -55,6 +55,20 @@ router.get('/child', async (req, res) => {
   res.json({ code: statusCode.success, childIds: childIds })
 })
 
+// 根据menu_id获取对应的菜单名称
+router.get('/getMenuByMenuid', async (req, res) => {
+  const { id } = req.query
+  const menuservice = new menuService()
+  const result = await menuservice.getMenuByMenuid(id)
+  const menu_item = result.map(e => {
+    return {
+      id: e.menu_id,
+      label: e.title
+    }
+  })
+  res.json({ code: statusCode.success, content: menu_item })
+})
+
 // 对菜单的CURD操作
 // 1.获取
 router.get('/', async (req, res) => {
@@ -64,4 +78,6 @@ router.get('/', async (req, res) => {
   const list = handleMenu2(menus, parseInt(pid))
   res.json({ code: statusCode.success, content: list, totalElements: totalElements})
 })
+
+
 module.exports = router
