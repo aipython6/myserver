@@ -4,6 +4,7 @@ const statusCode = require('../../utils/statusCode')
 const menuService = require('../../system/service/menuService')
 const roleService = require('../../system/service/roleService')
 const handleRouter = require('../../utils/handleRouter')
+const handleDate = require('../../utils/handleDate')
 const { handleMenu2, handleMenu3 } = require('../../utils/handleMenu')
 // 获取某个角色下的所有菜单
 router.get('/build', async (req, res, next) => {
@@ -77,6 +78,33 @@ router.get('/', async (req, res) => {
   const { menus, totalElements } = await menuservice.all({ page: page, size: size })
   const list = handleMenu2(menus, parseInt(pid))
   res.json({ code: statusCode.success, content: list, totalElements: totalElements})
+})
+
+// 添加菜单
+router.post('/', async (req, res) => {
+  const data = req.body
+  const insert_item = {
+    type: data.type,
+    title: data.title,
+    path: data.path,
+    icon: data.icon,
+    menu_sort: data.menuSort,
+    pid: data.pid === 0 ? null : data.pid,
+    component: data.component === null ? 'Layout' : data.component,
+    redirect: data.redirect,
+    i_frame: data.iFrame,
+    cache: data.cache === false ? 0 : 1,
+    hidden: data.hidden === false ? 0 : 1,
+    create_time: handleDate(new Date()),
+    permission: data.permission
+  }
+  const menuservice = new menuService()
+  const result = await menuservice.add(insert_item)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '添加成功'})
+  } else {
+    res.json({ code: statusCode.addMenuError, content: '添加失败'})
+  }
 })
 
 

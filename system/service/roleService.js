@@ -8,8 +8,8 @@ class roleService {
     return this.roleImpl.findRoleByUserId(user_id)
   }
   // 获取所有的role
-  all(page, size) {
-    return this.roleImpl.all(page, size)
+  all(data) {
+    return this.roleImpl.all(data)
   }
   // 获取所有的level
   level() {

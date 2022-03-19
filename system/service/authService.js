@@ -18,6 +18,11 @@ class authService {
     return this.authImpl.findUserinfoByUsername(username)
   }
 
+  // 用户头像上传
+  avatarUpload(data) {
+    return this.authImpl.avatarUpload(data)
+  }
+
   // 查询uuid
   findUUID(uuid, code) {
     return this.authImpl.findUUID(uuid, code)

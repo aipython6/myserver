@@ -7,10 +7,10 @@ const roleType = require('../../utils/roleType')
 const handleDate = require('../../utils/handleDate')
 // 获取所有的roles
 router.get('/', async (req, res, next) => {
-  const { page, size, id } = req.query
+  const { page, size, id, blurry, createTime } = req.query
   const roleservice = new roleService()
   const menuservice = new menuService()
-  const { roles, totalElements } = await roleservice.all(page, size)
+  const { roles, totalElements } = await roleservice.all({page: page, size: size, blurry: blurry, createTime: createTime})
   let temp_map = {}
   const result_roles = []
   // 获取roles对应的所有menu_ids

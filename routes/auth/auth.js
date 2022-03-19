@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const path = require('path')
+const fs = require('fs')
 const svgCaptcha = require('svg-captcha')
 const { v4: uuidv4 } = require('uuid')
 const comparePassword = require('../../utils/passBcrypt')
@@ -9,6 +11,11 @@ const authService = require('../../system/service/authService')
 const roleService = require('../../system/service/roleService')
 const handleDate = require('../../utils/handleDate')
 const update_date = handleDate(new Date())
+
+const config = require('../../utils/urlConfig')
+const upload = require('../../utils/postFile')
+const uploadObj = upload.postAvatar()
+
 // 获取验证码
 router.get('/code', async (req, res, next) => {
   const authservice = new authService()
@@ -62,15 +69,7 @@ router.get('/info', async (req, res, next) => {
   const authservice = new authService()
   const userInfo = await authservice.findUserinfoByUsername(username)
   // 用户角色,可能有多个
-  const roles = userInfo.map(e => { return e.type
-    // return {
-    //   roles: e.type,
-    //   name: e.name,
-    //   level: e.level,
-    //   data_scope: e.data_scope,
-    //   descrption: e.descrption
-    // }
-  })
+  const roles = userInfo.map(e => e.type)
   // 用户基本信息
   const basic_info = {
     user_id: userInfo[0].user_id,
@@ -86,6 +85,30 @@ router.get('/info', async (req, res, next) => {
   }
   res.json({ code: statusCode.success, user: basic_info, roles: roles ,msg: '获取用户信息成功' })
 })
+
+// 用户头像上传
+router.post('/avatarUpload', uploadObj.array('img'), async (req, res) => {
+  const username = req.headers.username
+  const uploadUrl = config.avatarUpload
+  const downloadUrl = config.avatarDownload
+  const authservice = new authService()
+  const files = req.files
+  const temp = files.map(e => {
+    const uuid = uuidv4()
+    const basename = path.basename(e.path)
+    const suffix = path.extname(e.path)
+    const newname = uuid + suffix
+    fs.rename(uploadUrl + basename, uploadUrl + newname, err => { })
+    return { file: downloadUrl + newname, filename: path.basename(basename, suffix) }
+  })
+  const result = await authservice.avatarUpload({ avatar_path: temp[0].file, usename: username, update_date: update_date })
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, files: temp, msg: '头像上传成功' })
+  } else {
+    res.json({ code: statusCode.avatarUploadError, files: temp, msg: '头像上传失败' })
+  }
+})
+
 
 // 退出
 router.delete('/logout', async (req, res, next) => {

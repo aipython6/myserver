@@ -32,8 +32,13 @@ class menuService {
   delMenus(id) {
     return this.menuImpl.delMenus(id)
   }
+  
   all(params) {
     return this.menuImpl.all(params)
+  }
+
+  add(data) {
+    return this.menuImpl.add(data)
   }
 }
 

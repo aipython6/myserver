@@ -116,6 +116,7 @@ class menuImpl {
     })
   }
 
+  // menus的CRUD操作
   // 获取全部的menus
   all(params) {
     const { page, size } = params
@@ -141,12 +142,27 @@ class menuImpl {
             }
           })
           if (page && size) {
-            pageList = menus.filter((item, index) => index < size * page && index >= size * (page - 1))
+            const s = size + 9999
+            pageList = menus.filter((item, index) => index < s * page && index >= s * (page - 1))
           } else {
             pageList = menus
           }
           const total = menus.filter(e => e.type === 0).length
           resolve({ menus: pageList, totalElements: total })
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 添加menu
+  add(data) {
+    const sql = `insert into menus set ?`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, data, (err, result) => {
+        if (!err) {
+          resolve(result)
         } else {
           reject(err)
         }

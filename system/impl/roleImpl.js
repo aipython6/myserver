@@ -23,8 +23,18 @@ class roleImpl {
   }
 
   // 获取所有的role
-  all(page, size) {
-    const sql = `select * from roles`
+  all({ page, size, blurry, createTime }) {
+    let sql = `select * from roles`
+    if (blurry) {
+      sql += ` where name like '%${blurry}%' or description like '%${blurry}%'`
+    }
+    if (createTime instanceof Array && createTime.length > 0) {
+      if (blurry) {
+        sql += ` and create_time between '${createTime[0]}' and '${createTime[1]}'`
+      } else {
+        sql += ` where create_time between '${createTime[0]}' and '${createTime[1]}'`
+      }
+    }
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result) {
         if (!err) {

@@ -94,6 +94,7 @@ const handleMenu2 = (menuList, pid) => {
     })
     return resultMapChildren
   }
+  
 }
 
 // 对menu的三个级别进行处理

@@ -30,7 +30,13 @@ const statusCode = {
   editMenusError: 209,
 
   // 添加role失败
-  addRoleError: 210
+  addRoleError: 210,
+
+  // 添加menu失败
+  addMenuError: 211,
+
+  // 头像上传失败
+  avatarUploadError: 212
 }
 
 module.exports = statusCode

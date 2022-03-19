@@ -2,7 +2,6 @@ const mysqlConnect = require('../../database/mysql_config')
 class authImpl {
   // 获取验证码
   getCode(insert_item) {
-    console.log(insert_item)
     const sql = `INSERT INTO uuid SET ?`
     return new Promise((resolve, reject)  => {
       mysqlConnect.query(sql, insert_item, (err, result) => {
@@ -39,6 +38,21 @@ class authImpl {
           resolve(result)
         } else {
           reject(err) 
+        }
+      })
+    })
+  }
+
+
+  // 用户头像上传
+  avatarUpload({avatar_path, username, update_date}) {
+    const sql = `update users set avatar_path = '${avatar_path}', update_time = '${update_date}' where username = '${username}'`
+    return new Promise((resolve, reject) => {
+      mysqlConnection.query(sql, (err, res) => {
+        if (!err) {
+          resolve(res)
+        } else {
+          reject(err)
         }
       })
     })
