@@ -7,7 +7,7 @@ class Token {
 	}
 	// 根据用户传入的username校验token
 	verify(token, username) {
-		if (token === undefined || token === '') {
+		if (!token) {
 			return false
 		} else {
 			return new Promise((resolve, reject) => {
