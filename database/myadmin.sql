@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 19/03/2022 23:41:02
+ Date: 20/03/2022 21:45:22
 */
 
 SET NAMES utf8mb4;
@@ -131,12 +131,36 @@ CREATE TABLE `logs`  (
   `origin` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来自哪个IP的请求',
   `browser` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器类型',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间',
+  `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'user_agent',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of logs
 -- ----------------------------
+INSERT INTO `logs` VALUES (5, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:14', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (6, '10530', '/api/menus/build?username=10530&user_id=1', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:14', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (7, '10530', '/api/menus/build?username=10530&user_id=1', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:15', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (8, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:40', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (9, '10530', '/api/logs/user?page=0&size=10&sort=id%2Cdesc', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (10, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:44', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (11, '10530', '/api/menus/build?username=10530&user_id=1', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:44', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (12, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:44', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (13, '10530', '/api/logs/user?page=0&size=10&sort=id%2Cdesc', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:45:45', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (14, '10530', '/api/logs/user', '::1', NULL, '2022-03-20 14:47:14', 'PostmanRuntime/7.26.8');
+INSERT INTO `logs` VALUES (15, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:48:58', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (16, '10530', '/api/menus/build?username=10530&user_id=1', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:48:58', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (17, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:48:59', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (18, '10530', '/api/logs/user?page=0&size=10&sort=id%2Cdesc', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:49:00', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (19, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:49:58', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (20, '10530', '/api/menus/build?username=10530&user_id=1', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:49:58', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (21, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:49:59', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (22, '10530', '/api/logs/user?page=0&size=10&sort=id%2Cdesc', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:50:00', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (23, '10530', '/api/logs/user?page=0&size=10&sort=id%2Cdesc', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:50:37', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (24, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:51:14', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (25, '10530', '/api/menus/build?username=10530&user_id=1', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:51:14', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (26, '10530', '/auth/info?username=10530', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:51:15', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
+INSERT INTO `logs` VALUES (27, '10530', '/api/logs/user?page=0&size=10&sort=id%2Cdesc', '::ffff:127.0.0.1', '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"', '2022-03-20 14:51:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36');
 
 -- ----------------------------
 -- Table structure for menus
@@ -210,9 +234,8 @@ INSERT INTO `menus` VALUES (79, 18, 0, 2, '文件删除', NULL, '', 4, '', '', N
 INSERT INTO `menus` VALUES (83, 10, 0, 1, '图表库', 'Echarts', 'components/Echarts', 50, 'chart', 'echarts', NULL, 0, 1, 0, '', NULL, NULL, '2019-11-21 09:04:32', NULL);
 INSERT INTO `menus` VALUES (115, NULL, 0, 0, '数据管理', NULL, 'Layout', 999, 'source', 'data', '/data/permission', 0, 0, 0, NULL, NULL, NULL, '2022-03-19 21:02:26', NULL);
 INSERT INTO `menus` VALUES (116, 115, 0, 1, '权限管理', 'Permission', 'data/permission/index', 999, 'permission', 'permission', NULL, 0, 0, 0, NULL, NULL, NULL, '2022-03-19 22:03:13', NULL);
-INSERT INTO `menus` VALUES (117, 116, 0, 2, '权限新增', NULL, 'Layout', 999, NULL, NULL, NULL, 0, 0, 0, 'permission:add', NULL, NULL, '2022-03-19 22:13:05', NULL);
-INSERT INTO `menus` VALUES (118, 116, 0, 2, '权限编辑', NULL, 'Layout', 999, NULL, NULL, NULL, 0, 0, 0, 'permission:edit', NULL, NULL, '2022-03-19 22:13:57', NULL);
-INSERT INTO `menus` VALUES (119, 116, 0, 2, '权限删除', NULL, 'Layout', 999, NULL, NULL, NULL, 0, 0, 0, 'permission:del', NULL, NULL, '2022-03-19 22:14:22', NULL);
+INSERT INTO `menus` VALUES (117, 116, 0, 2, '权限新增', NULL, '', 999, NULL, NULL, NULL, 0, 0, 0, 'permission:add', NULL, NULL, '2022-03-19 22:13:05', NULL);
+INSERT INTO `menus` VALUES (118, 116, 0, 2, '权限编辑', NULL, '', 999, NULL, NULL, NULL, 0, 0, 0, 'permission:edit', NULL, NULL, '2022-03-19 22:13:57', NULL);
 
 -- ----------------------------
 -- Table structure for roles
@@ -371,6 +394,7 @@ CREATE TABLE `users`  (
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `gender` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
+  `nickName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `avatar_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像地址',
   `avatar_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像真实路径',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
@@ -392,11 +416,11 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '财务部', 2, '10530', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$DUWtP6zaRbQaOtcI1QRzrOzfHJ/npNqOGsnLzo.kgpyEw.3nhh9Uy', 1, 1, 'admin', 'admin', '2022-01-30 20:32:58', '2022-01-30 20:32:58', '2022-03-04 16:52:50');
-INSERT INTO `users` VALUES (2, '财务部', 2, '10531', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$7H805QbW0ZPr8OSnvuP11.69idunc3oRoOU1QBusz/oQHltE0iPoS', 0, 1, 'admin', 'admin', '2022-03-03 15:17:45', '2022-03-03 15:17:45', '2022-03-04 16:40:16');
-INSERT INTO `users` VALUES (11, '院务工作部', 6, '10533', '男', '18999998888', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$7biIcHDCjruH6b6/5VfyIONN8wM6EDuOKwG136OPx5Z7FfcGXMF9m', 0, 1, 'admin', 'admin', '2022-03-03 17:39:23', '2022-03-03 17:39:23', '2022-03-04 16:52:33');
-INSERT INTO `users` VALUES (13, '财务部', 2, '10536', '男', '15263986398', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$r7OgWRygJ/pcdFpLTPtP6OYO4GfHj5Hv5hKXbQGFl3Iy9JqKwWwrq', 0, 1, 'admin', 'admin', '2022-03-05 13:15:30', '2022-03-05 13:15:30', '2022-03-05 16:11:29');
-INSERT INTO `users` VALUES (15, '财务部', 2, '10541', '男', '15896325896', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$ILKQ5oaPk8qw37uUGdkQeeHfPE1lYStpqxZmStzYmw3NClgM6vlZC', 0, 1, 'admin', 'admin', '2022-03-05 13:34:46', '2022-03-05 13:34:46', '2022-03-05 13:34:46');
+INSERT INTO `users` VALUES (1, '财务部', 2, '10530', '女', '18999998877', '泡泡龙666', '用户头像', 'http://localhost:8000/images/avatar/28cccc29-cc07-49c4-ae44-5cf9a736fcb4.png', '$2a$10$UdwbD6amnW1fUFixQjzSu.7WbOFy3zVJPoDB1xnZuQs.nAcASjGO2', 1, 1, 'admin', 'admin', '2022-01-30 20:32:58', '2022-01-30 20:32:58', '2022-03-20 12:44:01');
+INSERT INTO `users` VALUES (2, '财务部', 2, '10531', '男', '18999998888', '潇潇懂', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$7H805QbW0ZPr8OSnvuP11.69idunc3oRoOU1QBusz/oQHltE0iPoS', 0, 1, 'admin', 'admin', '2022-03-03 15:17:45', '2022-03-03 15:17:45', '2022-03-04 16:40:16');
+INSERT INTO `users` VALUES (11, '院务工作部', 6, '10533', '男', '18999998888', '小桃子666', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$7biIcHDCjruH6b6/5VfyIONN8wM6EDuOKwG136OPx5Z7FfcGXMF9m', 0, 1, 'admin', 'admin', '2022-03-03 17:39:23', '2022-03-03 17:39:23', '2022-03-04 16:52:33');
+INSERT INTO `users` VALUES (13, '财务部', 2, '10536', '男', '15263986398', '非常yyds', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$r7OgWRygJ/pcdFpLTPtP6OYO4GfHj5Hv5hKXbQGFl3Iy9JqKwWwrq', 0, 1, 'admin', 'admin', '2022-03-05 13:15:30', '2022-03-05 13:15:30', '2022-03-05 16:11:29');
+INSERT INTO `users` VALUES (15, '财务部', 2, '10541', '男', '15896325896', '躺平侠', '用户头像', 'http://localhost:8000/images/avatar/default.png', '$2a$10$ILKQ5oaPk8qw37uUGdkQeeHfPE1lYStpqxZmStzYmw3NClgM6vlZC', 0, 1, 'admin', 'admin', '2022-03-05 13:34:46', '2022-03-05 13:34:46', '2022-03-05 13:34:46');
 
 -- ----------------------------
 -- Table structure for users_depts
@@ -463,7 +487,7 @@ CREATE TABLE `uuid`  (
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of uuid
@@ -492,5 +516,15 @@ INSERT INTO `uuid` VALUES (48, '6e2c9c4a-a6ca-4882-8d75-e091b967174a', 'swK2', '
 INSERT INTO `uuid` VALUES (49, 'e61e8917-5ac2-4707-a531-6c63b382b33a', 'wFAd', '2022-03-19 20:08:45');
 INSERT INTO `uuid` VALUES (50, '6aba4d6c-49a0-4eb7-ac82-4840d1c94b30', 'aVFz', '2022-03-19 20:08:45');
 INSERT INTO `uuid` VALUES (51, '7f3f1f8e-ac26-47a2-bee9-e696c4219f5c', '848F', '2022-03-19 23:36:06');
+INSERT INTO `uuid` VALUES (52, '5d5caf93-d8e0-4ac9-b657-beeee55fa51c', 'GL6C', '2022-03-20 13:21:02');
+INSERT INTO `uuid` VALUES (53, 'df146260-eb70-4f1f-8ba3-5a5c55dee03b', 'VKTr', '2022-03-20 13:21:02');
+INSERT INTO `uuid` VALUES (54, '53f94015-50c1-416f-87f5-a4a80f9defee', 'WkAt', '2022-03-20 13:21:02');
+INSERT INTO `uuid` VALUES (55, '61b958f5-4dc7-4a29-b5ac-4b1bf3414274', 'pXhf', '2022-03-20 13:26:34');
+INSERT INTO `uuid` VALUES (56, '52e52778-4f99-4b51-b0cb-289ffc2706a7', 'NFCh', '2022-03-20 13:30:23');
+INSERT INTO `uuid` VALUES (57, '6d6e4b62-ab5f-40d6-9e69-c7cd3d4cc46a', 'feRv', '2022-03-20 14:20:23');
+INSERT INTO `uuid` VALUES (58, '1f049283-f2fb-4f63-a78c-9820d76492a1', 'u5B7', '2022-03-20 14:20:23');
+INSERT INTO `uuid` VALUES (59, '487efc50-5e8e-4a7f-947e-77f7f035374a', '8vBQ', '2022-03-20 14:20:23');
+INSERT INTO `uuid` VALUES (60, '3015276c-7526-40fb-8138-23e8b05ccfb6', 'zCuY', '2022-03-20 14:38:19');
+INSERT INTO `uuid` VALUES (61, '721099a6-8160-44c2-8ed9-55dd1162415f', 'nv4X', '2022-03-20 14:45:00');
 
 SET FOREIGN_KEY_CHECKS = 1;
