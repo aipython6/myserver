@@ -18,6 +18,22 @@ class userService {
   add(userItem) {
     return this.userImpl.add(userItem)
   }
+
+  // 根据username查询password
+  findPassByUsername(username) {
+    return this.userImpl.findPassByUsername(username)
+  }
+
+  // 根据username更新password
+  updatePass(data) {
+    return this.userImpl.updatePass(data)
+  }
+
+  // 更新个人中心的其他信息
+  updateCenterInfo(data) {
+    return this.userImpl.updateCenterInfo(data)
+  }
+
   // 删除用户
   del(user_ids) {
     return this.userImpl.del(user_ids)

@@ -40,6 +40,14 @@ class menuService {
   add(data) {
     return this.menuImpl.add(data)
   }
+
+  edit(data) {
+    return this.menuImpl.edit(data)
+  }
+
+  del(ids) {
+    return this.menuImpl.del(ids)
+  }
 }
 
 module.exports = menuService

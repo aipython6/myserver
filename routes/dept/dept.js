@@ -11,12 +11,12 @@ router.get('/getDepts', async (req, res, next) => {
   // 所有部门
   if (!JSON.parse(params.children)) {
     // 一级的map
-    let firstMap = { id: '', name: '', hasChildren: true, children: [] }
+    let firstMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', hasChildren: true, children: [] }
     // 一级map对应的children数组
     let firstChildrenList = []
 
     // 二级的map
-    let secondMap = { name: '', id: '' }
+    let secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '' }
 
     // 最终depts数组
     const resultList = []
@@ -25,19 +25,25 @@ router.get('/getDepts', async (req, res, next) => {
       if (!f.pid) {
         firstMap.name = f.name
         firstMap.id = f.dept_id
+        firstMap.pid = f.pid
+        firstMap.deptSort = f.dept_sort,
+        enabled = f.enabled
         depts.forEach(s => {
           if (s.pid === f.dept_id) {
             secondMap.name = s.name
             secondMap.id = s.dept_id
+            secondMap.pid = s.pid
+            secondMap.deptSort = s.dept_sort
+            secondMap.enabled = s.enabled
             firstChildrenList.push(secondMap)
           }
-          secondMap = { name: '', id: '' }
+          secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '' }
         })
         firstMap.children = firstChildrenList
         resultList.push(firstMap)
         firstChildrenList = []
       }
-      firstMap = { id: '', name: '', hasChildren: true, children: [] }
+      firstMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', hasChildren: true, children: [] }
     })
     res.json({ code: statusCode.success, content: resultList })
   } else {

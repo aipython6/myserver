@@ -7,6 +7,8 @@ const cors = require('cors')
 const token = require('./utils/signAndverifyToken')
 const statusCode = require('./utils/statusCode')
 const corsConfig = require('./utils/corsConfig')
+const handleDate = require('./utils/handleDate')
+const logService = require('./system/service/logService')
 // const { createProxyMiddleware } = require('http-proxy-middleware')
 
 const indexRouter = require('./routes/index');
@@ -17,7 +19,7 @@ const deptRouter = require('./routes/dept/dept')
 const roleRouter = require('./routes/role/role')
 const jobRouter = require('./routes/job/job')
 const dictRouter = require('./routes/dict/dict')
-
+const logRouter = require('./routes/log/log')
 const app = express();
 
 // view engine setup
@@ -39,6 +41,16 @@ app.use(async (req, res, next) => {
   if (whiteList.includes(url)) {
     return next()
   } else {
+    const logservice = new logService()
+    const insert_item = {
+      req_username: req.headers.username,
+      req_url: req.url,
+      origin: req.ip,
+      browser: req.headers['sec-ch-ua'],
+      user_agent: req.headers['user-agent'],
+      create_time: handleDate(new Date())
+    }
+    // await logservice.addLog(insert_item)
     // 获取请求头的token
     const t = req.headers.authorization
     // req.query为GET或DELETE请求，否则为POST或PUT请求
@@ -60,6 +72,7 @@ app.use('/api/dept', deptRouter)
 app.use('/api/roles', roleRouter)
 app.use('/api/job', jobRouter)
 app.use('/api/dictDetail', dictRouter)
+app.use('/api/logs', logRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

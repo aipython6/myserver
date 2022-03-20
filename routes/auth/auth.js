@@ -65,7 +65,7 @@ router.post('/login', async (req, res, next) => {
 
 // 获取用户信息
 router.get('/info', async (req, res, next) => {
-	const { username } = req.query
+  const { username } = req.query
   const authservice = new authService()
   const userInfo = await authservice.findUserinfoByUsername(username)
   // 用户角色,可能有多个
@@ -76,6 +76,7 @@ router.get('/info', async (req, res, next) => {
     username: userInfo[0].username,
     dept_name: userInfo[0].dept_name,
     avatar_path: userInfo[0].avatar_path,
+    nickName: userInfo[0].nickName,
     gender: userInfo[0].gender,
     phone: userInfo[0].phone,
     is_admin: userInfo[0].is_admin,
@@ -88,6 +89,7 @@ router.get('/info', async (req, res, next) => {
 
 // 用户头像上传
 router.post('/avatarUpload', uploadObj.array('img'), async (req, res) => {
+  console.log(req.files)
   const username = req.headers.username
   const uploadUrl = config.avatarUpload
   const downloadUrl = config.avatarDownload
@@ -101,7 +103,7 @@ router.post('/avatarUpload', uploadObj.array('img'), async (req, res) => {
     fs.rename(uploadUrl + basename, uploadUrl + newname, err => { })
     return { file: downloadUrl + newname, filename: path.basename(basename, suffix) }
   })
-  const result = await authservice.avatarUpload({ avatar_path: temp[0].file, usename: username, update_date: update_date })
+  const result = await authservice.avatarUpload({ avatar_path: temp[0].file, username: username, update_date: update_date })
   if (result.affectedRows > 0) {
     res.json({ code: statusCode.success, files: temp, msg: '头像上传成功' })
   } else {

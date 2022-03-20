@@ -73,7 +73,6 @@ class userImpl {
 
   // 添加用户
   async add(userItem) {
-    console.log(userItem)
     const item = {
       username: userItem.username,	// 职工号
       dept_name: userItem.dept_name,
@@ -94,6 +93,48 @@ class userImpl {
     const sql = `INSERT INTO users SET ?`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, item, function (err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 根据username查询对应的密码
+  findPassByUsername(username) {
+    const sql = `select password from users where username = '${username}'`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function (err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 更新密码
+  updatePass({ newPass, username, reset_time }) {
+    const sql = `update users set password = '${newPass}', pwd_reset_time = '${reset_time}' where username = '${username}'`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function (err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 更新个人中心其他信息
+  updateCenterInfo({ id, phone, gender, nickName, update_time }) {
+    const sql = `update users set phone= ${phone}, gender = '${gender}', nickName = '${nickName}', update_time= '${update_time}' where user_id = ${id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, function (err, result) {
         if (!err) {
           resolve(result)
         } else {

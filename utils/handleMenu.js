@@ -2,10 +2,10 @@
 const handleMenu2 = (menuList, pid) => {
   const treeData = []
   // 所有内容的map
-  let resultMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '',  createTime: '', children: [] }
+  let resultMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', path: '', type: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '',  createTime: '', children: [] }
   let resultMapChildren = []
   // resultMap.children下的map
-  let secondMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '', createTime: '' }
+  let secondMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', path: '', type: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '', createTime: '' }
   let secondMapChildren = []
   // 如果pid!==undefined，则懒加载数据
   if (pid) {
@@ -14,6 +14,8 @@ const handleMenu2 = (menuList, pid) => {
       resultMap.id = a.menu_id
       resultMap.pid = a.pid
       resultMap.title = a.title
+      resultMap.path = a.path
+      resultMap.type = a.type
       resultMap.icon = a.icon
       resultMap.Menusort = a.Menusort
       resultMap.permission = a.permission
@@ -29,6 +31,8 @@ const handleMenu2 = (menuList, pid) => {
           secondMap.id = b.menu_id
           secondMap.pid = b.pid
           secondMap.title = b.title
+          secondMap.path = b.path
+          secondMap.type = b.type
           secondMap.icon = b.icon
           secondMap.Menusort = b.Menusort
           secondMap.permission = b.permission
@@ -41,13 +45,13 @@ const handleMenu2 = (menuList, pid) => {
           secondMap.hasChildren = b.type === 2 ? false: true
           secondMapChildren.push(secondMap)
         }
-        secondMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '', createTime: '' }
+        secondMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', path: '', type: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '', createTime: '' }
       })
       resultMap.children = secondMapChildren
       resultMapChildren.push(resultMap)
       secondMapChildren = []
     }
-    resultMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '',  createTime: '', children: [] }
+    resultMap = { leaf: '', hasChildren: '', id: '', pid: '', title: '', path: '', type: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '',  createTime: '', children: [] }
   })
     return resultMapChildren
     // 加载初始化数据，pid=undefined
@@ -57,6 +61,8 @@ const handleMenu2 = (menuList, pid) => {
         resultMap.id = a.menu_id
         resultMap.pid = a.pid
         resultMap.title = a.title
+        resultMap.path = a.path
+        resultMap.type = a.type
         resultMap.icon = a.icon
         resultMap.Menusort = a.Menusort
         resultMap.permission = a.permission
@@ -72,6 +78,8 @@ const handleMenu2 = (menuList, pid) => {
             secondMap.id = b.menu_id
             secondMap.pid = b.pid
             secondMap.title = b.title
+            secondMap.path = b.path
+            secondMap.type = b.type
             secondMap.icon = b.icon
             secondMap.Menusort = b.Menusort
             secondMap.permission = b.permission
@@ -84,13 +92,13 @@ const handleMenu2 = (menuList, pid) => {
             secondMap.hasChildren = b.type === 2 ? false: true
             secondMapChildren.push(secondMap)
           }
-          secondMap = { leaf: '', id: '', pid: '', title: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '', createTime: '', children: [] }
+          secondMap = { leaf: '', id: '', pid: '', title: '', path: '', type: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '', createTime: '', children: [] }
         })
         resultMap.children = secondMapChildren
         resultMapChildren.push(resultMap)
         secondMapChildren = []
       }
-      resultMap = { leaf: '', id: '', pid: '', title: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '',  createTime: '', children: [] }
+      resultMap = { leaf: '', id: '', pid: '', title: '', path: '', type: '', icon: '', Menusort: '', permission: '', component: '', iFrame: '', cache: '', hidden: '',  createTime: '', children: [] }
     })
     return resultMapChildren
   }
@@ -167,4 +175,21 @@ const handleMenu3 = menuList => {
   })
   return treeData
 }
-module.exports = { handleMenu2, handleMenu3 };
+
+// menu_id查询其所有的一级、二级menu_id，实现删除menu的功能
+const handleDelMenu = (menuList, menu_id) => {
+  let del_list = [menu_id]
+  menuList.forEach(a => {
+    if (a.pid === menu_id) {
+      del_list.push(a.menu_id)
+      menuList.forEach(b => {
+        if (a.menu_id === b.pid) {
+          del_list.push(b.menu_id)
+        }
+      })
+    }
+  })
+  return del_list
+}
+// 根据
+module.exports = { handleMenu2, handleMenu3, handleDelMenu };

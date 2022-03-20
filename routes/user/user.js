@@ -8,6 +8,7 @@ const jobService = require('../../system/service/jobService')
 const authService = require('../../system/service/authService')
 const deptService = require('../../system/service/deptService')
 const handleError = require('../../utils/handleError')
+const password = require('../../utils/passBcrypt')
 
 /* 用户相关的所有请求 */
 
@@ -85,7 +86,6 @@ router.post('/add', async (req, res, next) => {
     if (userRes.length === 0) {
       let addRole_result = false
       const result = await userservice.add(obj)
-      console.log(result)
       const userItem = await userservice.findUserinfoByUsername(obj.username)
       
       // 一个用户可能有多个角色
@@ -111,6 +111,45 @@ router.post('/add', async (req, res, next) => {
     res.status(statusCode.statusErrorCode).json(err)
   }
 })
+
+// 个人中心更新密码
+router.post('/updatePass', async (req, res) => {
+  const { oldPass, newPass } = req.body
+  const username = req.headers.username
+  const userservice = new userService()
+  const oldPassList = await userservice.findPassByUsername(username)
+  const hash = oldPassList[0].password
+  if (await password.passDecode(hash, oldPass)) {
+    const result = await userservice.updatePass({ newPass: await password.passEncode(newPass), username: username, reset_time: handleDate(new Date()) })
+    if (result.affectedRows > 0) {
+      res.json({ code: statusCode.success, content: '更新密码成功' })
+    } else {
+      res.json({ code: statusCode.updatePassError, content: '更新密码失败' })
+    }
+  } else {
+    res.json({ code: statusCode.updatePassError, content: '原始密码错误' })
+  }
+})
+
+// 个人中心信息更新
+router.put('/center', async (req, res) => {
+  const { id, nickName, phone, gender } = req.body
+  const userservice = new userService()
+  const update_item = {
+    id: id,
+    phone: phone,
+    nickName: nickName,
+    gender: gender,
+    update_time: handleDate(new Date())
+  }
+  const result = await userservice.updateCenterInfo(update_item)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '用户信息更新成功' })
+  } else {
+    res.json({ code: statusCode.updateCenterUserinfoError, content: '用户信息更新失败'})
+  }
+})
+
 
 // 编辑用户
 router.put('/edit', async (req, res, next) => {

@@ -36,7 +36,19 @@ const statusCode = {
   addMenuError: 211,
 
   // 头像上传失败
-  avatarUploadError: 212
+  avatarUploadError: 212,
+
+  // 密码更新失败
+  updatePassError: 213,
+
+  // 更新个人中心信息失败
+  updateCenterUserinfoError: 214,
+
+  // 删除menu失败
+  delMenuError: 215,
+
+  // 更新menu失败
+  updateMenuError: 216
 }
 
 module.exports = statusCode

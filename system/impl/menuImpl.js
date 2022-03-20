@@ -45,7 +45,7 @@ class menuImpl {
 
   findMenuByPid(pid) {
     let sql = ``
-    if (pid === null) {
+    if (!pid) {
       sql = `select * from menus where pid is null`
     } else {
       sql = `select * from menus where pid = ${pid}`
@@ -131,7 +131,8 @@ class menuImpl {
               pid: e.pid,
               menu_id: e.menu_id,
               title : e.title,
-              icon : e.icon,
+              icon: e.icon,
+              path: e.path,
               Menusort : e.menu_sort,
               permission : e.permission,
               component : e.component,
@@ -161,6 +162,38 @@ class menuImpl {
     const sql = `insert into menus set ?`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, data, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 更新
+  edit(data) {
+    const { id, title, menu_sort, component, name, i_frame, pid, icon, cache, hidden, type, permission, redirect,update_time } = data
+    const sql = `update menus set title='${title}',menu_sort=${menu_sort}, 
+    component='${component}', name='${name}', i_frame='${i_frame}', 
+    pid = ${pid}, icon='${icon}',cache=${cache}, hidden=${hidden}, type=${type}, permission=${permission}, 
+    redirect=${redirect}, update_time=${update_time} where menu_id = ${id}`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // 删除
+  del(ids) {
+    const sql = `delete from menus where menu_id in (?)`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, [ids], (err, result) => {
         if (!err) {
           resolve(result)
         } else {

@@ -30,7 +30,7 @@ class authImpl {
 
   // 根据username查询用户详细信息
   findUserinfoByUsername(username) {
-    const user_sql = `select c.user_id,c.username,c.dept_name,c.avatar_path,c.gender,c.phone,c.is_admin,c.enabled,c.create_by,c.create_time,d.name,d.level,d.data_scope,d.description,d.type 
+    const user_sql = `select c.user_id,c.username,c.dept_name,c.nickName,c.avatar_path,c.gender,c.phone,c.is_admin,c.enabled,c.create_by,c.create_time,d.name,d.level,d.data_scope,d.description,d.type 
 	  from ( select a.role_id,b.* from users_roles a left join users b on a.user_id = b.user_id where b.username = '${ username }') c left join roles d on c.role_id = d.role_id `
     return new Promise((resolve, reject) => {
       mysqlConnect.query(user_sql, function(err, result) {
@@ -45,10 +45,10 @@ class authImpl {
 
 
   // 用户头像上传
-  avatarUpload({avatar_path, username, update_date}) {
+  avatarUpload({ avatar_path, username, update_date }) {
     const sql = `update users set avatar_path = '${avatar_path}', update_time = '${update_date}' where username = '${username}'`
     return new Promise((resolve, reject) => {
-      mysqlConnection.query(sql, (err, res) => {
+      mysqlConnect.query(sql, (err, res) => {
         if (!err) {
           resolve(res)
         } else {

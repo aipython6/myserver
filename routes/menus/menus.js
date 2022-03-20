@@ -5,7 +5,7 @@ const menuService = require('../../system/service/menuService')
 const roleService = require('../../system/service/roleService')
 const handleRouter = require('../../utils/handleRouter')
 const handleDate = require('../../utils/handleDate')
-const { handleMenu2, handleMenu3 } = require('../../utils/handleMenu')
+const { handleMenu2, handleDelMenu } = require('../../utils/handleMenu')
 // 获取某个角色下的所有菜单
 router.get('/build', async (req, res, next) => {
 	// const { user_id } = req.query
@@ -104,6 +104,49 @@ router.post('/', async (req, res) => {
     res.json({ code: statusCode.success, content: '添加成功'})
   } else {
     res.json({ code: statusCode.addMenuError, content: '添加失败'})
+  }
+})
+
+// 编辑
+router.put('/edit', async (req, res) => {
+  const data = req.body
+  const menuservice = new menuService()
+  const update_item = {
+    id: data.id,
+    title: data.title,
+    menu_sort: data.menuSort,
+    component: data.component,
+    name: data.componentName,
+    i_frame: data.iFrame,
+    pid: data.pid,
+    icon: data.icon,
+    cache: data.cache,
+    hidden: data.hidden,
+    type: data.type,
+    permission: data.permission,
+    redirect: data.redirect,
+    update_time: handleDate(new Date())
+  }
+  const result = await menuservice.edit(update_item)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '更新成功'})
+  } else {
+    res.json({ code: statusCode.updateMenuError, content: '更新失败' })
+  }
+})
+
+// 删除
+router.delete('/del', async (req, res) => {
+  const id = req.body[0]
+  // const id = eval(req.body.data)[0]
+  const menuservice = new menuService()
+  const { menus } = await menuservice.all({})
+  const del_list = handleDelMenu(menus, id)
+  const result = await menuservice.del(del_list)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '删除菜单成功' })
+  } else {
+    res.json({ code: statusCode.delMenuError, content: '删除菜单失败' })
   }
 })
 
