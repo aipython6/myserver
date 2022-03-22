@@ -173,11 +173,12 @@ class menuImpl {
 
   // 更新
   edit(data) {
-    const { id, title, menu_sort, component, name, i_frame, pid, icon, cache, hidden, type, permission, redirect,update_time } = data
+    const { id, title, menu_sort, component, name, i_frame, pid, icon, cache, hidden, type, permission, redirect, update_time } = data
+    const t_iFrame = i_frame === false ? 0 : 1
     const sql = `update menus set title='${title}',menu_sort=${menu_sort}, 
-    component='${component}', name='${name}', i_frame='${i_frame}', 
-    pid = ${pid}, icon='${icon}',cache=${cache}, hidden=${hidden}, type=${type}, permission=${permission}, 
-    redirect=${redirect}, update_time=${update_time} where menu_id = ${id}`
+    component='${component}', name='${name}', i_frame=${t_iFrame}, 
+    pid = ${pid}, icon='${icon}',cache=${cache}, hidden=${hidden}, type=${type}, permission='${permission}', 
+    redirect='${redirect}', update_time='${update_time}' where menu_id = ${id}`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, (err, result) => {
         if (!err) {
