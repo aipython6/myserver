@@ -20,7 +20,7 @@ class dataImpl {
               has_detail: e.has_detail,
               detail_type: e.detail_type,
               sql: e.sql,
-              enabled: e.enabled === 1 ? '是' : '否',
+              enabled: e.enabled === 1 ? true : false,
               create_at: handleDate(e.create_at)
             }
           })
@@ -56,6 +56,25 @@ class dataImpl {
       })
     })
   }
+
+  // CRUD操作
+  add(data) {
+    // const { id, pid, parentName, title, path, description, has_detail, detail_type, enabled } = data
+    const sql = `insert into datadetails set ?`
+    return new Promise((resolve, reject) => {
+      mysqlConnec.query(sql, data, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  // edit({ id, pid, title, path, description, has_detail, detail_type, enabled }) {
+  //   const sql = `update datadetails set pid = ${pid}, title`
+  // }
 }
 
 module.exports = dataImpl

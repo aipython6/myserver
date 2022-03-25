@@ -48,7 +48,14 @@ const statusCode = {
   delMenuError: 215,
 
   // 更新menu失败
-  updateMenuError: 216
+  updateMenuError: 216,
+
+  // 添加data失败
+  addDataError: 217,
+
+  editDataError: 218,
+
+  delDataError: 219
 }
 
 module.exports = statusCode

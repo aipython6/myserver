@@ -10,6 +10,9 @@ class dataService {
   getParentType() {
     return this.dataImpl.getParentType()
   }
+  add(data) {
+    return this.dataImpl.add(data)
+  }
 }
 
 module.exports = dataService
