@@ -9,10 +9,8 @@ const statusCode = require('./utils/statusCode')
 const corsConfig = require('./utils/corsConfig')
 const handleDate = require('./utils/handleDate')
 const logService = require('./system/service/logService')
-const { TokenExpiredError } = require('./utils/handleError')
 // const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth/auth')
 const userRouter = require('./routes/user/user')
 const menusRouter = require('./routes/menus/menus')
@@ -72,7 +70,6 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.use('/', indexRouter);
 app.use('/auth', authRouter)
 app.use('/api/users', userRouter)
 app.use('/api/menus', menusRouter)
