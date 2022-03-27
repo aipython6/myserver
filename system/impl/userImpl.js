@@ -6,13 +6,13 @@ const handleDate = require('../../utils/handleDate')
 class userImpl {
 
   // 获取所有用户
-  findAllUsers(page, size, dept_id) {
+  findAllUsers(page, size, dept_ids) {
     let sql = `select * from users`
-    if (dept_id) {
-      sql += ` where and dept_id = ${dept_id}`
+    if (!dept_ids.includes(undefined)) {
+      sql += ` where dept_id in (?)`
     }
     return new Promise((resolve, reject) => {
-      mysqlConnect.query(sql, function(err, result) {
+      mysqlConnect.query(sql, [dept_ids], function(err, result) {
         if (!err) {
           const temps = result.map(e => {
             return {

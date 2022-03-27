@@ -41,7 +41,7 @@ router.get('/code', async (req, res, next) => {
 
 // 用户登录
 router.post('/login', async (req, res, next) => {
-  const { username, password, uuid, code } = req.body
+  const { username, password, uuid, code, rememberMe, tokenCookieExpires } = req.body
   const authservice = new authService()
   // 根据username查询用户是否存在
   const userRes = await authservice.findUserByUsername(username)
@@ -53,7 +53,7 @@ router.post('/login', async (req, res, next) => {
     // 该用户存在
     if (userRes.length === 1) {
       if (await comparePassword.passDecode(userRes[0].password, password)) {
-        res.json({ code: statusCode.success, token: token.sign(username), msg: '登录成功' })
+        res.json({ code: statusCode.success, token: token.sign(username, rememberMe, tokenCookieExpires ), msg: '登录成功' })
       } else {
         res.json({ code: statusCode.passError, msg: '密码错误,请重新输入' })
       }

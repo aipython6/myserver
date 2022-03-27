@@ -61,4 +61,20 @@ const handleDept = (deptList, pid) => {
   }
 }
 
-module.exports =handleDept
+// 根据dept查找其所有的一级、二级dept_id，实现点击树形的dept来查询用户的功能
+const deptFilter = (deptList, dept_id) => {
+  let filter_list = [dept_id]
+  deptList.forEach(a => {
+    if (a.pid === dept_id) {
+      filter_list.push(a.dept_id)
+      deptList.forEach(b => {
+        if (a.dept_id === b.pid) {
+          filter_list.push(b.dept_id)
+        }
+      })
+    }
+  })
+  return filter_list
+}
+
+module.exports = { handleDept, deptFilter }

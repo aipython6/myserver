@@ -176,7 +176,7 @@ const handleMenu3 = menuList => {
   return treeData
 }
 
-// menu_id查询其所有的一级、二级menu_id，实现删除menu的功能
+// 根据menu_id查询其所有的一级、二级menu_id，实现删除menu的功能
 const handleDelMenu = (menuList, menu_id) => {
   let del_list = [menu_id]
   menuList.forEach(a => {

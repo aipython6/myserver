@@ -7,18 +7,19 @@ const roleService = require('../../system/service/roleService')
 const jobService = require('../../system/service/jobService')
 const authService = require('../../system/service/authService')
 const deptService = require('../../system/service/deptService')
-const handleError = require('../../utils/handleError')
+const { handleError } = require('../../utils/handleError')
+const { deptFilter } = require('../../utils/handleDept')
 const password = require('../../utils/passBcrypt')
 
 /* 用户相关的所有请求 */
 
 // 获取所有的user
 router.get('/', async (req, res) => {
-  const { page, size, dept_id } = req.query
+  const { page, size, deptId } = req.query
   const userservice = new userService()
   const roleservice = new roleService()
   const jobservice = new jobService()
-  
+  const deptservice = new deptService()
   const users = []
   let obj = {
     id: null,
@@ -37,7 +38,12 @@ router.get('/', async (req, res) => {
     roles: [],
     jobs: []
   }
-  const usersTemp = await userservice.findAllUsers(page, size, Number.parseInt(dept_id))
+  const dept_res = await deptservice.all()
+  let dept_ids = [deptId]
+  if (deptId) {
+    dept_ids = deptFilter(dept_res, Number.parseInt(deptId))
+  }
+  const usersTemp = await userservice.findAllUsers(page, size, dept_ids)
   for (let user of usersTemp.users) {
     // 获取该用户所拥有的角色和job
     const roles = await roleservice.findRoleByUserId(user.id)
@@ -67,6 +73,8 @@ router.get('/', async (req, res) => {
   }
   res.json({ code: statusCode.success, content: users, totalElements: usersTemp.page })
 })
+
+
 
 // 添加用户
 router.post('/add', async (req, res, next) => {

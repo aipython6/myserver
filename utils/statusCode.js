@@ -55,7 +55,10 @@ const statusCode = {
 
   editDataError: 218,
 
-  delDataError: 219
+  delDataError: 219,
+
+  // token过期
+  tokenExpiredError: 401
 }
 
 module.exports = statusCode

@@ -75,6 +75,20 @@ class deptImpl {
     })
   }
 
+  // 获取所有的dept
+  all() {
+    const sql = `select * from depts where enabled = 1`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
   delUsersDeptsByUuserid(user_ids) {
     const sql = `delete from users_depts where user_id in (?)`
     return new Promise((resolve, reject) => {

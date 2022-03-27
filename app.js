@@ -9,6 +9,7 @@ const statusCode = require('./utils/statusCode')
 const corsConfig = require('./utils/corsConfig')
 const handleDate = require('./utils/handleDate')
 const logService = require('./system/service/logService')
+const { TokenExpiredError } = require('./utils/handleError')
 // const { createProxyMiddleware } = require('http-proxy-middleware')
 
 const indexRouter = require('./routes/index');
@@ -57,10 +58,16 @@ app.use(async (req, res, next) => {
     // req.query为GET或DELETE请求，否则为POST或PUT请求
     // const { username } = url.indexOf('?') !== -1 ? req.query : req.body
     const username = req.headers.username
-    if (!(await token.verify(t, username))) {
-      res.json({ code: statusCode.tokenVerifyError, msg: 'token验证失败' })
-    } else {
-      return next()
+    try {
+      if (!(await token.verify(t, username))) {
+        res.json({ code: statusCode.tokenVerifyError, msg: 'token验证失败' })
+      } else {
+        return next()
+      }
+    } catch (err) {
+      const error = Object.assign({}, err, { status: statusCode.tokenExpiredError })
+      res.status(statusCode.tokenExpiredError).json(error)
+        // throw new TokenExpiredError({ status: statusCode.tokenExpireError })
     }
   }
 })

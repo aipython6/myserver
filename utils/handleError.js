@@ -4,7 +4,14 @@ function handleError({ message, name, status }) {
   this.message = message;
   this.status = status;
 }
+
+function TokenExpiredError({ status }) {
+  this.status = status
+}
 handleError.prototype = Object.create(Error.prototype);
 handleError.prototype.constructor = handleError
 
-module.exports = handleError;
+TokenExpiredError.prototype = Object.create(Error.prototype);
+TokenExpiredError.prototype.constructor = TokenExpiredError
+
+module.exports = { handleError, TokenExpiredError };
