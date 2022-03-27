@@ -1,5 +1,8 @@
 // 所有请求的状态码
 const statusCode = {
+  // token过期
+  tokenExpiredError: 401,
+
   statusErrorCode: 306,
   // 所有请求返回的状态码和提示信息
 	success: 200,
@@ -57,8 +60,9 @@ const statusCode = {
 
   delDataError: 219,
 
-  // token过期
-  tokenExpiredError: 401
+  // 添加部门失败
+  addDeptError: 220,
+  editDeptError: 221,
 }
 
 module.exports = statusCode

@@ -60,24 +60,10 @@ class deptImpl {
     })
   }
 
-  // 添加一条记录
+  // 添加一条记录给users_depts
   add(params) {
     const { user_id, dept_id } = params
     const sql = `insert into users_depts (user_id, dept_id) values (${user_id}, ${dept_id})`
-    return new Promise((resolve, reject) => {
-      mysqlConnect.query(sql, (err, result) => {
-        if (!err) {
-          resolve(result)
-        } else {
-          reject(err)
-        }
-      })
-    })
-  }
-
-  // 获取所有的dept
-  all() {
-    const sql = `select * from depts where enabled = 1`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, (err, result) => {
         if (!err) {
@@ -93,6 +79,56 @@ class deptImpl {
     const sql = `delete from users_depts where user_id in (?)`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, [user_ids], function(err, result) {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+
+  // CRUD操作
+  // 获取所有的dept
+  all({ page, size }) {
+    let pageList = []
+    const sql = `select * from depts where enabled = 1`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          if (page && size) {
+            pageList = result.filter((item, index) => index < size * page && index >= size * (page - 1))
+          } else {
+            pageList = result
+          }
+          resolve({ deptList: pageList, totalElements: result.length })
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  add(data) {
+    // const { pid, name, dept_sort, enabled, sub_count, update_time } = data
+    const sql = `isnert into depts set ?`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, data, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  edit(data) {
+    const { pid, name, dept_sort, enabled, sub_count, update_time } = data
+    const sql = `update depts set pid = ${pid}, name = '${name}, dept_sort = ${dept_sort}, endbled = ${enabled}, sub_count = ${sub_count}, update_time = '${update_time}'`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, (err, result) => {
         if (!err) {
           resolve(result)
         } else {

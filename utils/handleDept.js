@@ -1,8 +1,8 @@
 // 对deptlist进行处理
 const handleDept = (deptList, pid) => {
-  let resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', hasChildren: true, children: [] }
+  let resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', sub_count: '', hasChildren: true, children: [] }
   let resultMapChildren = []
-  let secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '' }
+  let secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '', sub_count: '' }
   let secondMapChildren = []
   // pid!==undefined，懒加载数据
   if (pid) {
@@ -22,13 +22,13 @@ const handleDept = (deptList, pid) => {
             secondMap.pid = b.pid
             secondMapChildren.push(secondMap)
           }
-          secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '' }
+          secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '', sub_count: '' }
         })
         resultMap.children = secondMapChildren
         resultMapChildren.push(resultMap)
         secondMapChildren = []
       }
-      resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', hasChildren: true, children: [] }
+      resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', sub_count: '', hasChildren: true, children: [] }
     })
     return resultMap
     // pid===undefined 初始化时加载数据
@@ -40,6 +40,7 @@ const handleDept = (deptList, pid) => {
         resultMap.name = a.name
         resultMap.deptSort = a.dept_sort
         resultMap.enabled = a.enabled
+        resultMap.sub_count = a.sub_count
         deptList.forEach(b => {
           if (b.pid === a.dept_id) {
             secondMap.id = b.dept_id
@@ -47,15 +48,16 @@ const handleDept = (deptList, pid) => {
             secondMap.deptSort = b.dept_sort
             secondMap.enabled = b.enabled
             secondMap.pid = b.pid
+            secondMap.sub_count = b.sub_count
             secondMapChildren.push(secondMap)
           }
-          secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '' }
+          secondMap = { name: '', deptSort: '', id: '', enabled: '', pid: '', sub_count: '' }
         })
         resultMap.children = secondMapChildren
         resultMapChildren.push(resultMap)
         secondMapChildren = []
       }
-      resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', hasChildren: true, children: [] }
+      resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', sub_count: '',  hasChildren: true, children: [] }
     })
     return resultMap
   }

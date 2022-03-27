@@ -38,10 +38,10 @@ router.get('/', async (req, res) => {
     roles: [],
     jobs: []
   }
-  const dept_res = await deptservice.all()
+  const { deptList } = await deptservice.all({})
   let dept_ids = [deptId]
   if (deptId) {
-    dept_ids = deptFilter(dept_res, Number.parseInt(deptId))
+    dept_ids = deptFilter(deptList, Number.parseInt(deptId))
   }
   const usersTemp = await userservice.findAllUsers(page, size, dept_ids)
   for (let user of usersTemp.users) {

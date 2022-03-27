@@ -1,7 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const statusCode = require('../../utils/statusCode')
+const handleDate = require('../../utils/handleDate')
+const { handleDept } = require('../../utils/handleDept')
 const deptService = require('../../system/service/deptService')
+
+
 // 根据参数获取所有的部门名称
 router.get('/getDepts', async (req, res, next) => {
   // params may contain {enabled, sort, name, pid}
@@ -61,6 +65,74 @@ router.post('/getDeptSuperior', async (req, res, next) => {
   const deptservice = new deptService()
   const dept = await deptservice.getAllSuperDepts(eval(data))
   res.json({ code: statusCode.success, conten: dept })
+})
+
+// dept的CRUD操作
+
+// 查询
+router.get('/', async (req, res) => {
+  const { page, size, pid } = req.query
+  const deptservice = new deptService()
+  const { deptList, totalElements } = await deptservice.all({ page: page, size: size })
+  const content = deptList.map(e => {
+    return {
+      id: e.dept_id,
+      name: e.name,
+      deptSort: e.dept_sort,
+      enabled: e.enabled === 1 ? true : false,
+      pid: e.pid,
+      subConut: e.sub_count,
+      createTime: handleDate(e.create_time)
+    }
+  })
+  const list = handleDept(deptList, Number.parseInt(pid))
+  // console.log(list)
+  res.json({ code: statusCode.success, content: list, totalElements: totalElements})
+})
+
+// 添加
+router.post('/add', async (req, res) => {
+  const { id, name, isTop, subCount, pid, deptSort, enabled } = req.body
+  const deptservice = new deptService()
+  const insert_item = {
+    pid: pid,
+    name: name,
+    dept_sort: deptSort,
+    enabled: enabled === 'true' ? 1 : 0,
+    sub_count: subCount,
+    create_time: handleDate(new Date())
+  }
+  const result = await deptservice.add(insert_item)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '添加成功' })
+  } else {
+    res.json({ code: statusCode.addDeptError, content: '添加失败'})
+  }
+})
+
+// 编辑
+router.put('/edit', async (req, res) => {
+  const { id, name, isTop, subCount, pid, deptSort, enabled } = req.body
+  const deptservice = new deptService()
+  const update_item = {
+    pid: pid,
+    name: name,
+    dept_sort: deptSort,
+    enabled: enabled === 'true' ? 1 : 0,
+    sub_count: subCount,
+    update_time: handleDate(new Date())
+  }
+  const result = await deptservice.edit(update_item)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '编辑成功' })
+  } else {
+    res.json({ code: statusCode.editDeptError, content: '编辑失败'})
+  }
+})
+
+router.delete('/del', async (req, res) => {
+  const id = req.body[0]
+  res.json({ code: statusCode.success })
 })
 
 module.exports = router

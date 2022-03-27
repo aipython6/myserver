@@ -21,12 +21,16 @@ class deptService {
     return this.deptImpl.add(params)
   }
 
-  all() {
-    return this.deptImpl.all()
-  }
-
   delUsersDeptsByUuserid(user_ids) {
     return this.deptImpl.delUsersDeptsByUuserid(user_ids)
+  }
+
+  all(params) {
+    return this.deptImpl.all(params)
+  }
+
+  add(data) {
+    return this.deptImpl.add(data)
   }
   
 }
