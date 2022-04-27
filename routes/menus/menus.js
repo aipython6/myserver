@@ -86,6 +86,7 @@ router.post('/', async (req, res) => {
   const insert_item = {
     type: data.type,
     title: data.title,
+    name: data.name,
     path: data.path,
     icon: data.icon,
     menu_sort: data.menuSort,

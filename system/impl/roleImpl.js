@@ -25,6 +25,7 @@ class roleImpl {
   // 获取所有的role
   all({ page, size, blurry, createTime }) {
     let sql = `select * from roles`
+    let pageList = []
     if (blurry) {
       sql += ` where name like '%${blurry}%' or description like '%${blurry}%'`
     }
@@ -48,7 +49,11 @@ class roleImpl {
               createTime: handleDate(r.create_time)
             }
           })
-          const pageList = roles.filter((item, index) => index < size * page && index >= size * (page - 1))
+          if (page && size) {
+            pageList = roles.filter((item, index) => index < size * page && index >= size * (page - 1))
+          } else {
+            pageList = roles
+          }
           resolve({ roles: pageList, totalElements: roles.length })
         } else {
           reject(err)

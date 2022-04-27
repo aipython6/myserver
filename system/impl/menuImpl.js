@@ -5,7 +5,7 @@ class menuImpl {
   // 根据role_id查询所有的menu,type为menu的类型,type=0父级菜单，type=1父级菜单下的子菜单，type=2其他权限，此处为type!=2
   findMenusByRoldId (roles, type) {
     const new_type = type || 2
-    const sql = ` select distinct m.* FROM menus m, roles_menus r WHERE m.menu_id = r.menu_id AND r.role_id IN (?) AND type != ${new_type} order by m.menu_id asc `
+    const sql = ` select distinct m.* FROM menus m, roles_menus r WHERE m.menu_id = r.menu_id AND r.role_id IN (?) AND type != ${new_type} order by m.menu_sort asc `
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, [roles], (err, result) => {
         if (!err) {
