@@ -85,6 +85,7 @@ router.get('/', async (req, res) => {
       createTime: handleDate(e.create_time)
     }
   })
+  // console.log(deptList)
   const list = handleDept(deptList, Number.parseInt(pid))
   // console.log(list)
   res.json({ code: statusCode.success, content: list, totalElements: totalElements})
