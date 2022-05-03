@@ -112,7 +112,7 @@ class deptImpl {
 
   add(data) {
     // const { pid, name, dept_sort, enabled, sub_count, update_time } = data
-    const sql = `isnert into depts set ?`
+    const sql = `insert into depts set ?`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, data, (err, result) => {
         if (!err) {
@@ -129,6 +129,19 @@ class deptImpl {
     const sql = `update depts set pid = ${pid}, name = '${name}, dept_sort = ${dept_sort}, endbled = ${enabled}, sub_count = ${sub_count}, update_time = '${update_time}'`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+
+  del(ids) {
+    const sql = `delete from depts where dept_id in (?)`
+    return new Promise((resolve, reject) => {
+      mysqlConnect.query(sql, [ids], (err, result) => {
         if (!err) {
           resolve(result)
         } else {

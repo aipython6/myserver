@@ -12,13 +12,13 @@ const handleDept = (deptList, pid) => {
         resultMap.pid = a.pid
         resultMap.name = a.name
         resultMap.deptSort = a.dept_sort
-        resultMap.enabled = a.enabled
+        resultMap.enabled = a.enabled === 1 ? true : false
         deptList.forEach(b => {
           if (b.pid === a.dept_id) {
             secondMap.id = b.dept_id
             secondMap.name = b.name
             secondMap.deptSort = b.dept_sort
-            secondMap.enabled = b.enabled
+            secondMap.enabled = b.enabled === 1 ? true : false
             secondMap.pid = b.pid
             secondMapChildren.push(secondMap)
           }
@@ -30,7 +30,7 @@ const handleDept = (deptList, pid) => {
       }
       resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', sub_count: '', hasChildren: true, children: [] }
     })
-    return resultMap
+    return resultMapChildren
     // pid===undefined 初始化时加载数据
   } else {
     deptList.forEach(a => {
@@ -39,14 +39,14 @@ const handleDept = (deptList, pid) => {
         resultMap.pid = a.pid
         resultMap.name = a.name
         resultMap.deptSort = a.dept_sort
-        resultMap.enabled = a.enabled
+        resultMap.enabled = a.enabled === 1 ? true : false
         resultMap.sub_count = a.sub_count
         deptList.forEach(b => {
           if (b.pid === a.dept_id) {
             secondMap.id = b.dept_id
             secondMap.name = b.name
             secondMap.deptSort = b.dept_sort
-            secondMap.enabled = b.enabled
+            secondMap.enabled = b.enabled === 1 ? true : false
             secondMap.pid = b.pid
             secondMap.sub_count = b.sub_count
             secondMapChildren.push(secondMap)
@@ -59,7 +59,7 @@ const handleDept = (deptList, pid) => {
       }
       resultMap = { id: '', name: '', deptSort: '', enabled: '', pid: '', sub_count: '',  hasChildren: true, children: [] }
     })
-    return resultMap
+    return resultMapChildren
   }
 }
 

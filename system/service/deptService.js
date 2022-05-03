@@ -32,6 +32,10 @@ class deptService {
   add(data) {
     return this.deptImpl.add(data)
   }
+
+  del(ids) {
+    return this.deptImpl.del(ids)
+  }
   
 }
 

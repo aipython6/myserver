@@ -74,20 +74,7 @@ router.get('/', async (req, res) => {
   const { page, size, pid } = req.query
   const deptservice = new deptService()
   const { deptList, totalElements } = await deptservice.all({ page: page, size: size })
-  const content = deptList.map(e => {
-    return {
-      id: e.dept_id,
-      name: e.name,
-      deptSort: e.dept_sort,
-      enabled: e.enabled === 1 ? true : false,
-      pid: e.pid,
-      subConut: e.sub_count,
-      createTime: handleDate(e.create_time)
-    }
-  })
-  // console.log(deptList)
   const list = handleDept(deptList, Number.parseInt(pid))
-  // console.log(list)
   res.json({ code: statusCode.success, content: list, totalElements: totalElements})
 })
 
@@ -133,7 +120,9 @@ router.put('/edit', async (req, res) => {
 
 router.delete('/del', async (req, res) => {
   const id = req.body[0]
-  res.json({ code: statusCode.success })
+  const deptservice = new deptService()
+  await deptservice.del(id)
+  res.json({ code: statusCode.success, msg: '删除部门信息成功'})
 })
 
 module.exports = router
