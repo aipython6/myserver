@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50731
+ Source Server Version : 50732
  Source Host           : localhost:3306
  Source Schema         : myadmin
 
  Target Server Type    : MySQL
- Target Server Version : 50731
+ Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 01/05/2022 16:50:03
+ Date: 04/05/2022 21:20:29
 */
 
 SET NAMES utf8mb4;
@@ -478,7 +478,7 @@ INSERT INTO `datatypes` VALUES (11, '核酸检测', '东华检测', 1, '10530', 
 -- ----------------------------
 DROP TABLE IF EXISTS `depts`;
 CREATE TABLE `depts`  (
-  `dept_id` int(255) NULL DEFAULT NULL,
+  `dept_id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(255) NULL DEFAULT NULL,
   `sub_count` int(255) NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -487,8 +487,9 @@ CREATE TABLE `depts`  (
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `update_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+  `update_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`dept_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of depts
@@ -498,7 +499,8 @@ INSERT INTO `depts` VALUES (5, 7, 0, '人力资源部', 4, 1, 'admin', 'admin', 
 INSERT INTO `depts` VALUES (6, 8, 0, '院务工作部', 6, 1, 'admin', 'admin', '2019-03-25 09:52:18.000', '2020-06-08 11:59:21.000');
 INSERT INTO `depts` VALUES (7, NULL, 2, '华南分部', 0, 1, 'admin', 'admin', '2019-03-25 11:04:50.000', '2020-06-08 12:08:56.000');
 INSERT INTO `depts` VALUES (8, NULL, 2, '华北分部', 1, 1, 'admin', 'admin', '2019-03-25 11:04:53.000', '2020-05-14 12:54:00.000');
-INSERT INTO `depts` VALUES (15, 8, 0, 'UI部门', 7, 1, 'admin', 'admin', '2020-05-13 22:56:53.000', '2020-05-14 12:54:13.000');
+INSERT INTO `depts` VALUES (9, 8, 0, '审计科', 6, 1, NULL, NULL, '2022-05-03 19:35:16', NULL);
+INSERT INTO `depts` VALUES (10, 8, 0, '党务工作部', 7, 1, NULL, NULL, '2022-05-03 19:37:12', NULL);
 
 -- ----------------------------
 -- Table structure for dict
@@ -521,7 +523,6 @@ CREATE TABLE `dict`  (
 INSERT INTO `dict` VALUES (1, 'user_status', '用户状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
 INSERT INTO `dict` VALUES (4, 'dept_status', '部门状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
 INSERT INTO `dict` VALUES (5, 'job_status', '岗位状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict` VALUES (6, 'data_status', '数据状态', NULL, NULL, '2022-03-25 15:00:00', NULL);
 
 -- ----------------------------
 -- Table structure for dict_detail
@@ -1011,10 +1012,11 @@ CREATE TABLE `uuid`  (
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 71 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 72 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of uuid
 -- ----------------------------
+INSERT INTO `uuid` VALUES (71, 'f93fed7c-6bb1-4da1-9637-2ae958b5fedc', 'kQMb', '2022-05-03 17:47:39');
 
 SET FOREIGN_KEY_CHECKS = 1;
