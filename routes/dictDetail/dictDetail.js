@@ -37,7 +37,6 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/', async (req, res) => {
   const { label, id, value, dictSort, dictName } = req.body
-  console.log(req.body)
   const { username } = req.headers
   const dictdetailservice = new dictDetailService()
   const update_item = { detail_id: id, label: label, value: value, dictSort: dictSort, update_by: username, update_time: handleDate(new Date()) }
