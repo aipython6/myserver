@@ -42,9 +42,9 @@ router.put('/', async (req, res) => {
   const update_item = { detail_id: id, label: label, value: value, dictSort: dictSort, update_by: username, update_time: handleDate(new Date()) }
   const result = await dictdetailservice.edit(update_item)
   if (result.affectedRows > 0) {
-    res.json({ code: statusCode.success, content: '删除成功' })
+    res.json({ code: statusCode.success, content: '修改成功' })
   } else {
-    res.json({ code: statusCode.editDeptError, content: '删除失败'})
+    res.json({ code: statusCode.editDeptError, content: '修改失败'})
   }
 })
 
