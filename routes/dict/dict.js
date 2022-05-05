@@ -15,15 +15,9 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/dictDetail', async (req, res) => {
-  const { dictName, page, size } = req.query
-  const dictservice = new dictService()
-  const { dicts, totalElement } = await dictservice.getDictDetial(dictName, Number.parseInt(page), Number.parseInt(size))
-  res.json({ code: statusCode.success, content: dicts, totalElement: totalElement })
-})
-
+// 添加
 router.post('/', async (req, res) => {
-  const { name, description, dictDetails } = req.body
+  const { name, description } = req.body
   const { username } = req.headers
   const dictservice = new dictService()
   const insert_item = { name: name, description: description, create_by: username, create_time: handleDate(new Date()) }
@@ -35,4 +29,29 @@ router.post('/', async (req, res) => {
   }
 })
 
+// 修改
+router.put('/', async (req, res) => {
+  const { dict_id, name, description } = req.body
+  const { username } = req.headers
+  const dictservice = new dictService()
+  const update_item = { id: dict_id, name: name, description: description, create_by: username, update_time: handleDate(new Date()) }
+  const result = await dictservice.edit(update_item)
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '编辑成功' })
+  } else {
+    res.json({ code: statusCode.editDeptError, content: '编辑失败'})
+  }
+})
+
+// 删除
+router.delete('/', async (req, res) => {
+  const ids = req.body
+  const dictservice = new dictService()
+  const result = await dictservice.del(eval(ids))
+  if (result.affectedRows > 0) {
+    res.json({ code: statusCode.success, content: '删除成功' })
+  } else {
+    res.json({ code: statusCode.editDeptError, content: '删除失败'})
+  }
+})
 module.exports = router

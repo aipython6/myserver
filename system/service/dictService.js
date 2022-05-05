@@ -13,6 +13,12 @@ class dictService {
   add(data) {
     return this.dictImpl.add(data)
   }
+  edit(data) {
+    return this.dictImpl.edit(data)
+  }
+  del(ids) {
+    return this.dictImpl.del(ids)
+  }
 }
 
 module.exports = dictService

@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 04/05/2022 21:20:29
+ Date: 05/05/2022 23:02:14
 */
 
 SET NAMES utf8mb4;
@@ -515,14 +515,15 @@ CREATE TABLE `dict`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`dict_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of dict
 -- ----------------------------
-INSERT INTO `dict` VALUES (1, 'user_status', '用户状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict` VALUES (4, 'dept_status', '部门状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict` VALUES (5, 'job_status', '岗位状态', NULL, NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict` VALUES (1, 'user_status', '用户状态', '10530', NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict` VALUES (4, 'dept_status', '部门状态', '10530', NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict` VALUES (5, 'job_status', '岗位状态', '10530', NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict` VALUES (8, 'data_status', '数据管理', '10530', NULL, '2022-05-05 22:35:07', NULL);
 
 -- ----------------------------
 -- Table structure for dict_detail
@@ -540,7 +541,7 @@ CREATE TABLE `dict_detail`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`detail_id`) USING BTREE,
   INDEX `FK5tpkputc6d9nboxojdbgnpmyb`(`dict_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典详情' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典详情' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of dict_detail
@@ -551,6 +552,7 @@ INSERT INTO `dict_detail` VALUES (3, 4, '启用', 'true', 1, NULL, NULL, NULL, N
 INSERT INTO `dict_detail` VALUES (4, 4, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
 INSERT INTO `dict_detail` VALUES (5, 5, '启用', 'true', 1, NULL, NULL, NULL, NULL);
 INSERT INTO `dict_detail` VALUES (6, 5, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
+INSERT INTO `dict_detail` VALUES (8, 8, '启用', 'true', 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for jobs
@@ -1012,11 +1014,13 @@ CREATE TABLE `uuid`  (
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 72 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of uuid
 -- ----------------------------
 INSERT INTO `uuid` VALUES (71, 'f93fed7c-6bb1-4da1-9637-2ae958b5fedc', 'kQMb', '2022-05-03 17:47:39');
+INSERT INTO `uuid` VALUES (72, '3bb80a60-ac7a-4a17-93fe-75f2414dbf60', 'XBCR', '2022-05-05 19:19:56');
+INSERT INTO `uuid` VALUES (73, '076c5dca-9a2f-448e-a085-53ad00cce2da', 'QTYf', '2022-05-05 22:11:06');
 
 SET FOREIGN_KEY_CHECKS = 1;
