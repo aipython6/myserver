@@ -1,8 +1,11 @@
 const mysqlConnect = require('../../database/mysql_config')
 
 class dictImpl {
-  all(page, size) {
-    const sql = `select dict_id as id, description, name from dict`
+  all({ page, size, name }) {
+    let sql = `select dict_id as id, description, name from dict`
+    if (name) {
+      sql += ` where name like '%${name}%'`
+    }
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, (err, result) => {
         if (!err) {

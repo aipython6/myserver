@@ -7,6 +7,19 @@ class jobService {
   all(params) {
     return this.jobImpl.all(params)
   }
+
+  post(data) {
+    return this.jobImpl.post(data)
+  }
+
+  edit(data) {
+    return this.jobImpl.edit(data)
+  }
+
+  del(ids) {
+    return this.jobImpl.del(ids)
+  }
+
   findJobsByUserId(user_id) {
     return this.jobImpl.findJobsByUserId(user_id)
   }

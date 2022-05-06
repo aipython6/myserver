@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 05/05/2022 23:02:14
+ Date: 06/05/2022 23:13:33
 */
 
 SET NAMES utf8mb4;
@@ -541,7 +541,7 @@ CREATE TABLE `dict_detail`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`detail_id`) USING BTREE,
   INDEX `FK5tpkputc6d9nboxojdbgnpmyb`(`dict_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典详情' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典详情' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of dict_detail
@@ -552,7 +552,7 @@ INSERT INTO `dict_detail` VALUES (3, 4, '启用', 'true', 1, NULL, NULL, NULL, N
 INSERT INTO `dict_detail` VALUES (4, 4, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
 INSERT INTO `dict_detail` VALUES (5, 5, '启用', 'true', 1, NULL, NULL, NULL, NULL);
 INSERT INTO `dict_detail` VALUES (6, 5, '停用', 'false', 2, NULL, NULL, '2019-10-27 20:31:36', NULL);
-INSERT INTO `dict_detail` VALUES (8, 8, '启用', 'true', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `dict_detail` VALUES (10, 8, '启用', 'true', 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for jobs
@@ -561,7 +561,7 @@ DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs`  (
   `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位名称',
-  `enabled` bit(1) NOT NULL COMMENT '岗位状态',
+  `enabled` int(1) NOT NULL COMMENT '岗位状态',
   `job_sort` int(5) NULL DEFAULT NULL COMMENT '排序',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
@@ -570,15 +570,15 @@ CREATE TABLE `jobs`  (
   PRIMARY KEY (`job_id`) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
   INDEX `inx_enabled`(`enabled`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '岗位' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '岗位' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of jobs
 -- ----------------------------
-INSERT INTO `jobs` VALUES (8, '人事专员', b'1', 3, NULL, NULL, '2019-03-29 14:52:28', NULL);
-INSERT INTO `jobs` VALUES (10, '产品经理', b'1', 4, NULL, NULL, '2019-03-29 14:55:51', NULL);
-INSERT INTO `jobs` VALUES (11, '全栈开发', b'1', 2, NULL, 'admin', '2019-03-31 13:39:30', '2020-05-05 11:33:43');
-INSERT INTO `jobs` VALUES (12, '软件测试', b'1', 5, NULL, 'admin', '2019-03-31 13:39:43', '2020-05-10 19:56:26');
+INSERT INTO `jobs` VALUES (8, '人事专员', 1, 3, NULL, NULL, '2019-03-29 14:52:28', NULL);
+INSERT INTO `jobs` VALUES (10, '产品经理', 1, 4, NULL, NULL, '2019-03-29 14:55:51', NULL);
+INSERT INTO `jobs` VALUES (11, '全栈开发', 1, 2, NULL, 'admin', '2019-03-31 13:39:30', '2020-05-05 11:33:43');
+INSERT INTO `jobs` VALUES (13, '软件测试', 1, 5, '10530', '10530', '2022-05-06 22:45:11', '2022-05-06 22:45:11');
 
 -- ----------------------------
 -- Table structure for logs
@@ -1014,7 +1014,7 @@ CREATE TABLE `uuid`  (
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 77 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of uuid
@@ -1022,5 +1022,8 @@ CREATE TABLE `uuid`  (
 INSERT INTO `uuid` VALUES (71, 'f93fed7c-6bb1-4da1-9637-2ae958b5fedc', 'kQMb', '2022-05-03 17:47:39');
 INSERT INTO `uuid` VALUES (72, '3bb80a60-ac7a-4a17-93fe-75f2414dbf60', 'XBCR', '2022-05-05 19:19:56');
 INSERT INTO `uuid` VALUES (73, '076c5dca-9a2f-448e-a085-53ad00cce2da', 'QTYf', '2022-05-05 22:11:06');
+INSERT INTO `uuid` VALUES (74, '62279437-40e9-457e-8465-ab0d26df2f03', '8jHv', '2022-05-06 22:20:21');
+INSERT INTO `uuid` VALUES (75, 'c7a9003f-cc05-4472-8425-d7e5b196882e', 'gzsD', '2022-05-06 22:20:21');
+INSERT INTO `uuid` VALUES (76, '1ab9e6e1-d157-4c01-9318-4712471a4175', 'NrmT', '2022-05-06 23:06:22');
 
 SET FOREIGN_KEY_CHECKS = 1;

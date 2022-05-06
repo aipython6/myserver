@@ -4,8 +4,8 @@ class dictService {
   constructor() {
     this.dictImpl = new dictImpl()
   }
-  all(page, size) {
-    return this.dictImpl.all(page, size)
+  all(params) {
+    return this.dictImpl.all(params)
   }
   getDictDetial(dictName, page, size) {
     return this.dictImpl.getDictDetial(dictName, page, size)

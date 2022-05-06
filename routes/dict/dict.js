@@ -5,9 +5,9 @@ const dictService = require('../../system/service/dictService')
 const handleDate = require('../../utils/handleDate')
 
 router.get('/', async (req, res) => {
-  const { page, size } = req.query
+  const { page, size, blurry } = req.query
   const dictservice = new dictService()
-  const { dicts, totalElement } = await dictservice.all(Number.parseInt(page), Number.parseInt(size))
+  const { dicts, totalElement } = await dictservice.all({ page: Number.parseInt(page), size: Number.parseInt(size), name: blurry })
   if (totalElement > 0) {
     res.json({ code: statusCode.success, content: dicts, totalElement: totalElement })
   } else {

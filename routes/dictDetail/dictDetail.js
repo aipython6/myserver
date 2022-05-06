@@ -6,8 +6,9 @@ const dictDetailService = require('../../system/service/dictDetailService')
 
 router.get('/', async (req, res) => {
   const dictdetailservice = new dictDetailService()
-  const { dictName, page, size } = req.query
-  const params = { dictName: dictName, page: page, size: size }
+  let { dictName, page, size } = req.query
+  const tPage = Number.parseInt(page) === 0 ? page += 1 : page
+  const params = { dictName: dictName, page: tPage, size: size }
   const { dicts, totalElement } = await dictdetailservice.dictDetail(params)
   res.json({ code: statusCode.success, content: dicts, totalElement: totalElement })
 })
