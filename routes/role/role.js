@@ -79,7 +79,7 @@ router.post('/', async (req, res) => {
     description: data.description,
     level: parseInt(data.level),
     data_scope: data.dataScope,
-    create_time: data.createTime,
+    create_time: handleDate(new Date()),
     type: roleType[data.name].type,
     update_time: handleDate(new Date()),
     update_by: username,

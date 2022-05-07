@@ -63,10 +63,17 @@ class jobImpl {
   // 对job的CRUD操作
   // 1.获取所有job
   all(params) {
-    const { page, size, name } = params
+    const { page, size, name, enabled, createTime } = params
     let sql = `select job_id as id, name, enabled, job_sort, create_time from jobs`
     if (name) {
       sql += ` where name like '%${name}%'`
+    }
+    if (createTime instanceof Array && createTime.length > 0) {
+      if (name) {
+        sql += ` and create_time between '${createTime[0]}' and '${createTime[1]}'`
+      } else {
+        sql += ` where create_time between '${createTime[0]}' and '${createTime[1]}'`
+      }
     }
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, function(err, result){
