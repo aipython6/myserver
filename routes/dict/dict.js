@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const statusCode = require('../../utils/statusCode')
 const dictService = require('../../system/service/dictService')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 
 router.get('/', async (req, res) => {
   const { page, size, blurry } = req.query

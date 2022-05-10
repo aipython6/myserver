@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const dataService = require('../../system/service/dataService')
 const statusCode = require('../../utils/statusCode')
 router.get('/', async (req, res) => {

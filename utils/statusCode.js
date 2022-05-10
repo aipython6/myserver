@@ -63,6 +63,9 @@ const statusCode = {
   // 添加部门失败
   addDeptError: 220,
   editDeptError: 221,
+
+  // 上传excel失败
+  uploadExcelError: 222
 }
 
 module.exports = statusCode

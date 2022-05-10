@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const statusCode = require('../../utils/statusCode')
 const jobService = require('../../system/service/jobService')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 router.get('/', async (req, res) => {
   const params = req.query
   const jobservice = new jobService()
@@ -36,7 +36,7 @@ router.put('/edit', async (req, res) => {
   const { id, name, jobSort, enabled, createTime } = req.body
   const { username } = req.headers
   const jobservice = new jobService()
-  const update_item = { id: id, name: name, jobSort: jobSort, enabled: enabled === true ? 1 : 0,update_by: username, update_time: createTime }
+  const update_item = { id: id, name: name, jobSort: jobSort, enabled: enabled === true ? 1 : 0, update_by: username, update_time: createTime }
   const result = await jobservice.edit(update_item)
   if (result.affectedRows > 0) {
     res.json({ code: statusCode.success, content: '编辑成功' })

@@ -7,7 +7,7 @@ const cors = require('cors')
 const token = require('./utils/signAndverifyToken')
 const statusCode = require('./utils/statusCode')
 const corsConfig = require('./utils/corsConfig')
-const handleDate = require('./utils/handleDate')
+const { handleDate } = require('./utils/handleDate')
 const logService = require('./system/service/logService')
 // const { createProxyMiddleware } = require('http-proxy-middleware')
 
@@ -22,6 +22,7 @@ const dictDetailRouter = require('./routes/dictDetail/dictDetail')
 const logRouter = require('./routes/log/log')
 const dataRouter = require('./routes/data/data')
 const hrRouter = require('./routes/HR/hr')
+const basRouter = require('./routes/bas/bas')
 const app = express();
 
 // view engine setup
@@ -84,6 +85,7 @@ app.use('/api/dictDetail', dictDetailRouter)
 app.use('/api/logs', logRouter)
 app.use('/api/data', dataRouter)
 app.use('/api/hr', hrRouter)
+app.use('/api/bas', basRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

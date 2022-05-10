@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const statusCode = require('../../utils/statusCode')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const dictDetailService = require('../../system/service/dictDetailService')
 
 router.get('/', async (req, res) => {

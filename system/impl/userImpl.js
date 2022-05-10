@@ -1,7 +1,7 @@
 const mysqlConnect = require('../../database/mysql_config')
 const moment = require('moment')
 const password = require('../../utils/passBcrypt')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 // 用户管理相关方法的实现
 class userImpl {
 

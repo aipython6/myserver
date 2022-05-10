@@ -125,8 +125,9 @@ class deptImpl {
   }
 
   edit(data) {
-    const { pid, name, dept_sort, enabled, sub_count, update_time } = data
-    const sql = `update depts set pid = ${pid}, name = '${name}, dept_sort = ${dept_sort}, endbled = ${enabled}, sub_count = ${sub_count}, update_time = '${update_time}'`
+    const { id, pid, name, dept_sort, enabled, sub_count, update_time } = data
+    // const tEnabled = JSON.parse(enabled) === true ? 1 : 0
+    const sql = `update depts set pid = ${pid}, name = '${name}', dept_sort = ${dept_sort}, enabled = ${enabled}, sub_count = ${sub_count}, update_time = '${update_time}' where dept_id = ${id}`
     return new Promise((resolve, reject) => {
       mysqlConnect.query(sql, (err, result) => {
         if (!err) {

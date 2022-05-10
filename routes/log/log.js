@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const logService = require('../../system/service/logService')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const statusCode = require('../../utils/statusCode')
 
 router.get('/user', async (req, res) => {

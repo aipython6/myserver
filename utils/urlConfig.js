@@ -18,7 +18,13 @@ const config = {
   avatarUpload: path.join(__dirname, '../public/images/avatar/'),
 
   // 用户头像下载地址
-  avatarDownload: base_url + '/images/avatar/'
+  avatarDownload: base_url + '/images/avatar/',
+
+  // excel上传
+  excelUpload: path.join(__dirname, '../public/bas/excel/'),
+
+  // excel下载
+  excelDownload: base_url + '/bas/excel/'
 }
 
 

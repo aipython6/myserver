@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const statusCode = require('../../utils/statusCode')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const { handleDept } = require('../../utils/handleDept')
 const deptService = require('../../system/service/deptService')
 
@@ -103,6 +103,7 @@ router.put('/edit', async (req, res) => {
   const { id, name, isTop, subCount, pid, deptSort, enabled } = req.body
   const deptservice = new deptService()
   const update_item = {
+    id: id,
     pid: pid,
     name: name,
     dept_sort: deptSort,

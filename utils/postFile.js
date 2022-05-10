@@ -1,8 +1,5 @@
 // 文件上传
 const multer = require('multer')
-const fs = require('fs')
-const path = require('path')
-const { v4: uuidv4 } = require('uuid')
 const config = require('../utils/urlConfig')
 class postFile {
   // 上传pdf文件
@@ -25,6 +22,21 @@ class postFile {
     const storage = multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, config.avatarUpload)
+      },
+      filename: (req, file, cb) => {
+        const filename = file.originalname
+        cb(null, filename)
+      }
+    })
+    const uploader = multer({ storage: storage })
+    return uploader
+  }
+
+  // 上次excel
+  postExcel() {
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, config.excelUpload)
       },
       filename: (req, file, cb) => {
         const filename = file.originalname

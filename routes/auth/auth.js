@@ -9,7 +9,7 @@ const statusCode = require('../../utils/statusCode')
 const token = require('../../utils/signAndverifyToken')
 const authService = require('../../system/service/authService')
 const roleService = require('../../system/service/roleService')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const update_date = handleDate(new Date())
 
 const config = require('../../utils/urlConfig')

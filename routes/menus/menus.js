@@ -4,7 +4,7 @@ const statusCode = require('../../utils/statusCode')
 const menuService = require('../../system/service/menuService')
 const roleService = require('../../system/service/roleService')
 const handleRouter = require('../../utils/handleRouter')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const { handleMenu2, handleDelMenu } = require('../../utils/handleMenu')
 // 获取某个角色下的所有菜单
 router.get('/build', async (req, res, next) => {

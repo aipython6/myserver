@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const userService = require('../../system/service/userService')
 const statusCode = require('../../utils/statusCode')
 const roleService = require('../../system/service/roleService')

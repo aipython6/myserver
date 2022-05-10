@@ -1,5 +1,5 @@
 const mysqlConnect = require('../../database/mysql_config')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 const DBUtils = require('../../utils/databaseUtils')
 // role相关的实现方法
 class roleImpl {

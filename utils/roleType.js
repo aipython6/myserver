@@ -4,7 +4,8 @@ const roleType = {
   普通用户: { id: 2, type: 'normal' },
   新闻管理: { id: 3, type: 'newsEdit' },
   人员管理: { id: 4, type: 'hrEdit' },
-  数据管理: { id: 5, type: 'dataEdit' }
+  数据管理: { id: 5, type: 'dataEdit' },
+  病案数据: { id: 6, type: 'basEdit' }
 }
 
 module.exports = roleType

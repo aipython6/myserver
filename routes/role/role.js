@@ -4,7 +4,7 @@ const statusCode = require('../../utils/statusCode')
 const roleService = require('../../system/service/roleService')
 const menuService = require('../../system/service/menuService')
 const roleType = require('../../utils/roleType')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 // 获取所有的roles
 router.get('/', async (req, res, next) => {
   const { page, size, id, blurry, createTime } = req.query

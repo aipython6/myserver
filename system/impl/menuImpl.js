@@ -1,6 +1,6 @@
 // menus相关方法的实现
 const mysqlConnect = require('../../database/mysql_config')
-const handleDate = require('../../utils/handleDate')
+const { handleDate } = require('../../utils/handleDate')
 class menuImpl {
   // 根据role_id查询所有的menu,type为menu的类型,type=0父级菜单，type=1父级菜单下的子菜单，type=2其他权限，此处为type!=2
   findMenusByRoldId (roles, type) {
