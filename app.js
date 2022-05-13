@@ -23,6 +23,7 @@ const logRouter = require('./routes/log/log')
 const dataRouter = require('./routes/data/data')
 const hrRouter = require('./routes/HR/hr')
 const basRouter = require('./routes/bas/bas')
+const fileRouter = require('./routes/file/file')
 const app = express();
 
 // view engine setup
@@ -86,6 +87,7 @@ app.use('/api/logs', logRouter)
 app.use('/api/data', dataRouter)
 app.use('/api/hr', hrRouter)
 app.use('/api/bas', basRouter)
+app.use('/api/file', fileRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

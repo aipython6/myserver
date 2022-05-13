@@ -14,5 +14,10 @@ const getTimestamp = () => {
   return moment(new Date()).valueOf()
 }
 
+// 将时间戳转为日期和时间
+const standardTime = (timestamp) => {
+  return moment(timestamp).format('YYYY-MM-DD HH:mm:ss')
+}
 
-module.exports = { handleDate: handleDate, getTimestamp: getTimestamp } 
+
+module.exports = { handleDate: handleDate, getTimestamp: getTimestamp, standardTime } 
